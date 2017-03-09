@@ -1,24 +1,33 @@
 import os
-os.environ.setdefault('SCRIM_FINDER_SETTINGS_MODULE','scrim_finder_app.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE','scrim_finder.settings')
 
 import django
 django.setup()
-from scrim_finder_app.models import Team,Games,Match
+from scrim_finder_app.models import userProfile,Team,Games,Match
 
 def populate():
-    usersProfiles = [
-        {'User.username':'Ali', 'User.password': 'ali1234', 'email':'alimunn@gmail.com'
-         , 'playedGames' : ['Fifa','Madden','Dishonoured 2']}
-        {'User.username':'Jason', 'User.password': 'jason1234', 'email':'jegan@gmail.com'
-         , 'playedGames' : ['Fifa','Battlefield','Dishonoured 2']}
+    userProfiles = {'Ali': {'password': 'ali1234', 'email':'alimunn@gmail.com'
+         , 'playedGames' : ['Fifa','Madden','Dishonoured 2']},
+    'Jason' :{'password': 'jason1234', 'email':'jegan@gmail.com'
+         , 'playedGames' : ['Fifa','Battlefield','Dishonoured 2']}}
 
 
+    for user,userInfo in userProfiles.items():
+        user = add_user(user,userInfo['password'],userInfo['email'],userInfo['playedGames'])
 
-def add_user(userProfile,User.username,User.password,email,playedGames):
-        u = userProfile.get_or_create(User.username)[0]
+
+def add_user(user,password,email,playedGames):
+        u = userProfile.objects.get_or_create(userName = user)[0]
         u.email = email
         u.playedGames = playedGames
-        u.User.password = User.password
-        u.User.username = User.username
+        u.password = password
+        u.userName = user
         u.save()
         return u
+
+
+
+if __name__ == "__main__":
+    print("Starting population script")
+    populate()
+

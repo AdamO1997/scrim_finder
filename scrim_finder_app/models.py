@@ -6,9 +6,10 @@ from django.db import models
 class userProfile(models.Model):
 
     user = models.OneToOneField(User,on_delete = models.CASCADE)
-    email = models.EmailField(max_length = 254, **options)
+    email = models.EmailField(max_length = 254)
     picture = models.ImageField(upload_to='profile_images',blank = True)
-
+    playedGames = models.ManyToManyField(Game)
+    
 
     def __str__(self):
         return self.user.username
@@ -39,22 +40,24 @@ class Team(models.Model):
 class Games(models.Model):
     game = models.CharField(max_length = 30, unique = True)
     usersPlayed = models.ManyToManyField(userProfile)
+    teamsPlayed = models.ManyToManyField(Team)
     genre = models.CharField(max_length = 15)
 
     def __str__(self):
         return Games.game
 
-    Class Meta:
+    class Meta:
 
         ordering = ('game',)
 
 
 class Match(models.Model):
-    matchID = models.charField(max_length = 15,unique = True)
-    customName = models.charField(max_length = 20)
+    matchID = models.CharField(max_length = 15,unique = True)
+    customName = models.CharField(max_length = 20)
     date = models.DateTimeField()
     numPlayers = models.IntegerField()
     game = models.ForeignKey(Games,on_delete = models.CASCADE)
+    teamsPlaying = models.ManyToManyField(Team)
 
     def __str__(self):
         return Match.customName

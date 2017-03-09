@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scrim_finder',
+    'scrim_finder_app',
 ]
 
 MIDDLEWARE = [

@@ -1,41 +1,39 @@
 from __future__ import unicode_literals
-
+from django.contrib.auth.models import User
 
 from django.db import models
 
-class userProfile(models.Model):
-
-    userName = models.CharField(max_length = 20,unique = True)
-    password = models.CharField(max_length = 20)
-    email = models.EmailField(max_length = 254)
-    picture = models.ImageField(upload_to='profile_images',blank = True)
-    
-
-    def __str__(self):
-        return userProfile.userName
-
-    def __unicode__(self):
-        return userProfile.userName
-
-    class Meta:
-
-        ordering = ('userName',)
 
 
 class Team(models.Model):
 
     title = models.CharField(max_length = 30,unique = True)
-    users = models.ManyToManyField(userProfile)
     full = models.BooleanField(default = False)
     image = models.ImageField(upload_to='team_images',blank = True)
 
 
     def _str__(self):
-        return Team.title
+        return self.title
+
+    def __unicode__(self):
+        return self.title
 
     class Meta:
 
         ordering = ('title',)
+
+
+class userProfile(models.Model):
+
+    user = models.OneToOneField(User)
+    picture = models.ImageField(upload_to='profile_images',blank = True)
+    teams = models.ManyToManyField(Team)
+
+    def __str__(self):
+        return self.user.username
+
+    def __unicode__(self):
+        return self.user.username
 
 
 
@@ -46,7 +44,10 @@ class Games(models.Model):
     genre = models.CharField(max_length = 15)
 
     def __str__(self):
-        return Games.game
+        return self.game
+
+    def __unicode__(self):
+        return self.game
 
     class Meta:
 
@@ -62,7 +63,10 @@ class Match(models.Model):
     teamsPlaying = models.ManyToManyField(Team)
 
     def __str__(self):
-        return Match.customName
+        return self.customName
+
+    def __unicode__(self):
+        return self.customName
 
     class Meta:
         ordering = ('matchID',)

@@ -84,7 +84,7 @@ def index(request):
     else:
         team_list = Team.objects.order_by('?')[:10]
         match_list = Match.objects.filter(date=today)
-        game_list = Games.objects
+        game_list = Games.objects.order
         context_dict = {'teams': team_list, 'matches': match_list, 'games': game_list}
 
 
@@ -103,15 +103,45 @@ def account(request, username):
 
 
 @login_required
-def myGames(request):
+def myMatches(request):
 
     teams = request.user.teams
     matches = Match.objects.filter()
 
     context_dict = {'matches': matches}
 
-    return render(request, 'scrim_finder/myGames.html', context_dict)
+    return render(request, 'scrim_finder/myMatches.html', context_dict)
 
 
+@login_required
+def myTeams(request):
+
+    teams = request.user.teams
+
+    context_dict = {'teams': teams}
+
+    return render(request, 'scrim_finder/myTeams.html', context_dict)
+
+
+def matchList(request, gameName):
+    game = Games.objects.get(game = gameName)
+    matches = Match.objects.filter(game = game).order_by('date')
+    context_dict = {'matches': matches}
+
+    return render(request, 'scrim_finder/matchList.html', context_dict)
+
+
+def teamList(request):
+    teams = Team.objects.order_by('date')
+    context_dict = {'teams': teams}
+
+    return render(request, 'scrim_finder/teamList.html', context_dict)
+
+
+def gameList(request):
+    games = Games.objects.all()
+    context_dict = {'games': games}
+
+    return render(request, 'scrim_finder/gameList.html', context_dict)
 
 

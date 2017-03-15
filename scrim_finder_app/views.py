@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from datetime import datetime
 
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
 
 def user_login(request):
 
@@ -22,7 +29,7 @@ def user_login(request):
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'scrim_finderlogin.html', {})
+        return render(request, 'scrim_finder/login.html', {})
 
 
 def register(request):
@@ -64,7 +71,77 @@ def register(request):
 
 
     return render(request,
-                  'rango/register.html',
+                  'scrim_finder/register.html',
                   {'user_form': user_form,
                    'profile_form': profile_form,
                    'registered': registered})
+
+def index(request):
+
+    today = datetime.today()
+    if request.user.is_authenticated():
+
+    else:
+        team_list = Team.objects.order_by('?')[:10]
+        match_list = Match.objects.filter(date=today)
+        game_list = Games.objects.order
+        context_dict = {'teams': team_list, 'matches': match_list, 'games': game_list}
+
+
+    return render(request, 'scrim_finder/index.html', context_dict)
+
+
+def account(request, username):
+
+    user= User.objects.get(username = username)
+    profile = userProfile.objects.get(user = user)
+
+    context_dict = {'user':username, 'profile': profile}
+
+
+    return render(request, 'scrim_finder/account.html', context_dict)
+
+
+@login_required
+def myMatches(request):
+
+    teams = request.user.teams
+    matches = Match.objects.filter()
+
+    context_dict = {'matches': matches}
+
+    return render(request, 'scrim_finder/myMatches.html', context_dict)
+
+
+@login_required
+def myTeams(request):
+
+    teams = request.user.teams
+
+    context_dict = {'teams': teams}
+
+    return render(request, 'scrim_finder/myTeams.html', context_dict)
+
+
+def matchList(request, gameName):
+    game = Games.objects.get(game = gameName)
+    matches = Match.objects.filter(game = game).order_by('date')
+    context_dict = {'matches': matches}
+
+    return render(request, 'scrim_finder/matchList.html', context_dict)
+
+
+def teamList(request):
+    teams = Team.objects.order_by('date')
+    context_dict = {'teams': teams}
+
+    return render(request, 'scrim_finder/teamList.html', context_dict)
+
+
+def gameList(request):
+    games = Games.objects.all()
+    context_dict = {'games': games}
+
+    return render(request, 'scrim_finder/gameList.html', context_dict)
+
+

@@ -23,12 +23,13 @@ class Team(models.Model):
         ordering = ('title',)
 
 
+
 class userProfile(models.Model):
 
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to='profile_images',blank = True)
-    teams = models.ManyToManyField(Team)
     matches = models.ManyToManyField('Match')
+    teams = models.ManyToManyField(Team)
 
     def __str__(self):
         return self.user.username
@@ -40,14 +41,12 @@ class userProfile(models.Model):
 
 class Games(models.Model):
     game = models.CharField(max_length = 30, unique = True)
-    usersPlayed = models.ManyToManyField(userProfile)
-    teamsPlayed = models.ManyToManyField(Team)
     genre = models.CharField(max_length = 15)
 
     def __str__(self):
         return self.game
 
-    def __unicode__(self):
+    def __unicode__(self):  
         return self.game
 
     class Meta:
@@ -57,17 +56,15 @@ class Games(models.Model):
 
 class Match(models.Model):
     matchID = models.CharField(max_length = 15,unique = True)
-    customName = models.CharField(max_length = 20)
-    date = models.DateTimeField()
-    numPlayers = models.IntegerField()
+    date = models.DateTimeField(auto_now_add=True)
     game = models.ForeignKey(Games,on_delete = models.CASCADE)
     teamsPlaying = models.ManyToManyField(Team)
 
     def __str__(self):
-        return self.customName
+        return self.matchID
 
     def __unicode__(self):
-        return self.customName
+        return self.matchID
 
     class Meta:
         ordering = ('matchID',)

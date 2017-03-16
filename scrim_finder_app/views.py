@@ -71,29 +71,34 @@ def edit_team(request, teamName):
     #get team from teamName
     #get list of users from TeamMembers
     #is user in the list?
-    teams = request.user.teams
-    instance = Team.objects.get(title=teamName)
-    for team in teams:
-        if instance == team:
-            inTeam = True
+    if request.user.is_authenticated():
+        inTeam = False
+        user = request.user
+        teams = userProfile.obbjects.get(user = user)
+        instance = Team.objects.get(title=teamName)
+        for team in teams:
+            if instance == team:
+                inTeam = True
 
-    if request.user.is_authenticated() and inTeam:
-        if request.method == 'POST':
-            form = TeamForm(request.POST, instance=instance)
+        if inTeam:
+            if request.method == 'POST':
+                form = TeamForm(request.POST, instance=instance)
 
-            if form.is_valid():
-                form.save(commit=True)
+                if form.is_valid():
+                    form.save(commit=True)
 
-                return team(request, teamName)
+                    return team(request, teamName)
+                else:
+                    print(form.errors)
             else:
-                print(form.errors)
+                form = TeamForm(instance=instance)
+
+            return render(request, 'scrim_finder/editTeam.html', {'form': form})
+
         else:
-            form = TeamForm(instance=instance)
-
-        return render(request, 'scrim_finder/editTeam.html', {'form': form})
-
+            return HttpResponse('You are not on this team')
     else:
-        return HttpResponse('You are not on this team')
+        return HttpResponse('You must be logged in to view this page')
 
 @login_required
 def edit_account(request):

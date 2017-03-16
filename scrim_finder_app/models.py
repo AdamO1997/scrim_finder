@@ -10,7 +10,7 @@ class Team(models.Model):
     title = models.CharField(max_length = 30,unique = True)
     full = models.BooleanField(default = False)
     image = models.ImageField(upload_to='team_images',blank = True)
-
+    users = models.ManyToManyField('userProfile')
 
     def _str__(self):
         return self.title
@@ -28,6 +28,7 @@ class userProfile(models.Model):
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to='profile_images',blank = True)
     teams = models.ManyToManyField(Team)
+    matches = models.ManyToManyField('Match')
 
     def __str__(self):
         return self.user.username

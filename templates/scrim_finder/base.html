@@ -1,5 +1,29 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 
-	{% load staticfiles %}
-
+<html>
+	<head>
+		<title>
+			SF -
+			{% block title_block %}
+				Scrim Finder App
+			{% endblock %}
+		</title>
+	</head>
+	<body>
+		<div class="navbar">
+			{% block navbar_block %}
+				<ul>
+				  <li><a href="index.html">Home</a></li>
+				  <li><a href="matchList.html">Matches</a></li>
+				  <li><a href="teamList.html">Teams</a></li>
+				  <li><a href="gameList.html">Games</a></li>
+				</ul>
+			{% endblock %}
+		</div>
+		<div>
+			{% block body_block %}
+			{% endblock %}
+		</div>
+	</body>
 </html>

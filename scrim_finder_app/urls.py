@@ -14,10 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls import include
+from scrim_finder import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-	url(r'scrim_finder/', include('scrim_finder.urls')),
+	url(r'^account/', views.account, name='account'),
+	url(r'^gameList/'), views.gameList, name='gameList'),
+	url(r'^index/', views.index, name='index'),
+	url(r'^matchList/', views.matchList, name='matchList'),
+	url(r'^myMatches/', views.myMatches, name='myMatches'),
+	url(r'^myTeams/', views.myTeams, name='myTeams'),
+	url(r'^teamList/', views.teamList, name='teamList'),
 ]
+
+"""
+
+Urls to do:
+
+account
+gameList
+index
+matchList
+myMatches
+myTeams
+teamList
+
+"""

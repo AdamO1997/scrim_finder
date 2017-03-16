@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from datetime import datetime
 
 @login_required
@@ -46,20 +47,75 @@ def create_match(request):
     return render(request, 'scrim_finder/createMatch.html', {'form':form})
 
 @login_required
-def edit_match(request):
-    form = MatchForm()
+def edit_match(request, matchID):
 
-    if request.method == 'PUT':
-        form = MatchForm(request.PUT)
+    instance = Match.objects.get(matchID = matchID)
+
+    if request.method == 'POST':
+        form = MatchForm(request.POST, instance = instance)
 
         if form.is_valid():
             form.save(commit=True)
 
-            return index(request)
+            return match(request)
         else:
             print(form.errors)
+    else:
+        form = MatchForm(instance = instance)
 
     return render(request, 'scrim_finder/editMatch.html', {'form':form})
+
+
+@login_required
+def edit_team(request, teamName):
+    #get team from teamName
+    #get list of users from TeamMembers
+    #is user in the list?
+    if request.user.is_authenticated() :
+        instance = Team.objects.get(title=teamName)
+
+        if request.method == 'POST':
+            form = TeamForm(request.POST, instance=instance)
+
+            if form.is_valid():
+                form.save(commit=True)
+
+                return team(request, teamName)
+            else:
+                print(form.errors)
+        else:
+            form = TeamForm(instance=instance)
+
+        return render(request, 'scrim_finder/editTeam.html', {'form': form})
+
+
+@login_required
+def edit_account(request):
+    instance = Team.objects.get(title=teamName)
+
+    if request.method == 'POST':
+        form = TeamForm(request.POST, instance=instance)
+
+        if form.is_valid():
+            form.save(commit=True)
+
+            return team(request, teamName)
+        else:
+            print(form.errors)
+    else:
+        form = TeamForm(instance=instance)
+
+    return render(request, 'scrim_finder/editAccount.html', {'form': form})
+
+def team(request, teamName):
+    team = Team.objects.get(title = teamName)
+
+    return render(request, 'scrim_finder/team.html', {'team': team})
+
+def match(request, matchID):
+    match = Match.objects.get(matchID = matchID)
+
+    return render(request, 'scrim_finder/match.html', {'match': match})
 
 
 def user_login(request):
@@ -156,7 +212,7 @@ def account(request, username):
 def myMatches(request):
 
     teams = request.user.teams
-    matches = Match.objects.filter()
+    matches = Match.objects.filter(teamsPlaying__in = teams)
 
     context_dict = {'matches': matches}
 
@@ -182,7 +238,7 @@ def matchList(request, gameName):
 
 
 def teamList(request):
-    teams = Team.objects.order_by('date')
+    teams = Team.objects.order_by('?')
     context_dict = {'teams': teams}
 
     return render(request, 'scrim_finder/teamList.html', context_dict)

@@ -1,3 +1,5 @@
+from forms import *
+from models import *
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
@@ -10,6 +12,54 @@ from datetime import datetime
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def create_team(request):
+    form = TeamForm()
+
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+
+            return index(request)
+        else:
+            print(form.errors)
+
+    return render(request, 'scrim_finder/createTeam.html', {'form':form})
+
+@login_required
+def create_match(request):
+    form = MatchForm()
+
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+
+        if form.is_valid():
+            form.save(commit=True)
+
+            return index(request)
+        else:
+            print(form.errors)
+
+    return render(request, 'scrim_finder/createMatch.html', {'form':form})
+
+@login_required
+def edit_match(request):
+    form = MatchForm()
+
+    if request.method == 'PUT':
+        form = MatchForm(request.PUT)
+
+        if form.is_valid():
+            form.save(commit=True)
+
+            return index(request)
+        else:
+            print(form.errors)
+
+    return render(request, 'scrim_finder/editMatch.html', {'form':form})
 
 
 def user_login(request):

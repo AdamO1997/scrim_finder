@@ -49,32 +49,46 @@ def create_match(request):
 @login_required
 def edit_match(request, matchID):
 
-    instance = Match.objects.get(matchID = matchID)
+    if request.user.is_authenticated():
+        userProfile = userProfile.objects.get(user = request.user)
+        teams = userProfile.teams
+        match = Match.objects.get(matchID = matchID)
+        teamsPlaying = match.teamsPlaying
+        inMatch = false;
 
-    if request.method == 'POST':
-        form = MatchForm(request.POST, instance = instance)
+        for team1 in teams:
+            for team2 in teamsPlaying:
+                if team1 == team2:
+                    inMatch = true;
+                    break;
 
-        if form.is_valid():
-            form.save(commit=True)
+        if inMatch:
+            if request.method == 'POST':
+                form = MatchForm(request.POST, instance = instance)
 
-            return match(request)
+                if form.is_valid():
+                    form.save(commit=True)
+
+                    return match(request)
+                else:
+                    print(form.errors)
+            else:
+                form = MatchForm(instance = instance)
+
+            return render(request, 'scrim_finder/editMatch.html', {'form':form})
+
         else:
-            print(form.errors)
+            return HttpResponse('You are not playing in this match')
     else:
-        form = MatchForm(instance = instance)
-
-    return render(request, 'scrim_finder/editMatch.html', {'form':form})
-
+        return HttpResponse('You must be logged in to view this page')
 
 @login_required
 def edit_team(request, teamName):
-    #get team from teamName
-    #get list of users from TeamMembers
-    #is user in the list?
+
     if request.user.is_authenticated():
         inTeam = False
         user = request.user
-        teams = userProfile.obbjects.get(user = user)
+        teams = userProfile.objects.get(user = user)
         instance = Team.objects.get(title=teamName)
         for team in teams:
             if instance == team:
@@ -102,21 +116,30 @@ def edit_team(request, teamName):
 
 @login_required
 def edit_account(request):
-    instance = Team.objects.get(title=teamName)
+    if request.user.is_authenticated():
+        user = request.user
+        userProfileInstance = userProfile.objects.get(user = user)
 
-    if request.method == 'POST':
-        form = TeamForm(request.POST, instance=instance)
+        if request.method == 'POST':
+            userForm = UserForm(request.POST, instance=user)
+            userProfileForm = UserProfileForm(request.POST, instance = userProfileInstance)
 
-        if form.is_valid():
-            form.save(commit=True)
+            if userForm.is_valid() and userProfileForm.is_valid()a:
+                userForm.save(commit=True)
+                userProfileForm.save(commit=True)
 
-            return team(request, teamName)
+                return account(request, request.user.username)
+            else:
+                print(userForm.errors)
+                print(userProfileForm.errors)
         else:
-            print(form.errors)
-    else:
-        form = TeamForm(instance=instance)
+            userForm = UserForm(instance=user)
+            userProfileForm = UserProfileForm(instance=userProfileInstance)
 
-    return render(request, 'scrim_finder/editAccount.html', {'form': form})
+        return render(request, 'scrim_finder/editAccount.html', {'userForm': userForm, 'userProfileForm': userProfileForm})
+
+    else:
+        return HttpResponse('You must be logged in to view this page')
 
 def team(request, teamName):
     team = Team.objects.get(title = teamName)
@@ -196,13 +219,12 @@ def register(request):
 def index(request):
 
     today = datetime.today()
-    if request.user.is_authenticated():
 
-    else:
-        team_list = Team.objects.order_by('?')[:10]
-        match_list = Match.objects.filter(date=today)
-        game_list = Games.objects.order
-        context_dict = {'teams': team_list, 'matches': match_list, 'games': game_list}
+
+    team_list = Team.objects.order_by('?')[:10]
+    match_list = Match.objects.filter(date=today).order_by('?')[:10]
+    game_list = Games.objects.order_by('?')
+    context_dict = {'teams': team_list, 'matches': match_list, 'games': game_list}
 
 
     return render(request, 'scrim_finder/index.html', context_dict)
@@ -222,7 +244,8 @@ def account(request, username):
 @login_required
 def myMatches(request):
 
-    teams = request.user.teams
+    userProfile = userProfile.objects.get(user = request.user)
+    teams = userProfile.teams
     matches = Match.objects.filter(teamsPlaying__in = teams)
 
     context_dict = {'matches': matches}
@@ -233,7 +256,8 @@ def myMatches(request):
 @login_required
 def myTeams(request):
 
-    teams = request.user.teams
+    userProfile = userProfile.objects.get(user=request.user)
+    teams = userProfile.teams
 
     context_dict = {'teams': teams}
 

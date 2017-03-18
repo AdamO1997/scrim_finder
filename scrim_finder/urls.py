@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.conf.urls import include
+from scrim_finder_app import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+	url(r'^$', views.index, name='index'),
 	url(r'^scrim_finder/', include('scrim_finder_app.urls')),
+	url(r'^admin/', admin.site.urls),
 ]

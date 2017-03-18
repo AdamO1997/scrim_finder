@@ -17,9 +17,9 @@ from django.conf.urls import url
 from scrim_finder_app import views
 
 urlpatterns = [
+	url(r'^$', views.index, name='index'),
 	url(r'^account/', views.account, name='account'),
 	url(r'^gameList/', views.gameList, name='gameList'),
-	url(r'^index/', views.index, name='index'),
 	url(r'^matchList/', views.matchList, name='matchList'),
 	url(r'^myMatches/', views.myMatches, name='myMatches'),
 	url(r'^myTeams/', views.myTeams, name='myTeams'),

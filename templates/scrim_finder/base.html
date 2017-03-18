@@ -12,14 +12,12 @@
 	</head>
 	<body>
 		<div class="navbar">
-			{% block navbar_block %}
 				<ul>
 				  <li><a href="{% url 'index' %}">Home</a></li>
 				  <li><a href="{% url 'myMatches' %}">Matches</a></li>
 				  <li><a href="{% url 'myTeams' %}">Teams</a></li>
-				  <li><a href="{% url 'myGames' %}">Games</a></li>
+				  <li><a href="{% url 'gameList' %}">Games</a></li>
 				</ul>
-			{% endblock %}
 		</div>
 		<div>
 			{% block body_block %}

@@ -124,7 +124,7 @@ def edit_account(request):
             userForm = UserForm(request.POST, instance=user)
             userProfileForm = UserProfileForm(request.POST, instance = userProfileInstance)
 
-            if userForm.is_valid() and userProfileForm.is_valid()a:
+            if userForm.is_valid() and userProfileForm.is_valid():
                 userForm.save(commit=True)
                 userProfileForm.save(commit=True)
 

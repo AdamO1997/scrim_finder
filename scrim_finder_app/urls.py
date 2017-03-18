@@ -14,11 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from scrim_finder import views
+from scrim_finder_app import views
 
 urlpatterns = [
 	url(r'^account/', views.account, name='account'),
-	url(r'^gameList/'), views.gameList, name='gameList'),
+	url(r'^gameList/', views.gameList, name='gameList'),
 	url(r'^index/', views.index, name='index'),
 	url(r'^matchList/', views.matchList, name='matchList'),
 	url(r'^myMatches/', views.myMatches, name='myMatches'),

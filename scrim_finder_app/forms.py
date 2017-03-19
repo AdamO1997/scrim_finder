@@ -26,7 +26,7 @@ class MatchForm(forms.ModelForm):
 
     class Meta:
         model = Match
-        exclude = ('numPlayers',)
+        exclude = ('teamsPlaying',)
 
 
     

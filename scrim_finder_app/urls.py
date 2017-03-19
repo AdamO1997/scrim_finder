@@ -18,12 +18,14 @@ from scrim_finder_app import views
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
-	url(r'^account/', views.account, name='account'),
+	url(r'^profile/(?P<username>[\w\-]+)/', views.account, name='account'),
 	url(r'^gameList/', views.gameList, name='gameList'),
 	url(r'^matchList/', views.matchList, name='matchList'),
 	url(r'^myMatches/', views.myMatches, name='myMatches'),
 	url(r'^myTeams/', views.myTeams, name='myTeams'),
 	url(r'^teamList/', views.teamList, name='teamList'),
+	url(r'^register/', views.register, name='register'),
+	url(r'^logout/', views.user_logout, name = 'logout')
 ]
 
 """

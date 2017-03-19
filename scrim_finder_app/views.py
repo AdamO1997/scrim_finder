@@ -232,20 +232,26 @@ def index(request):
 
 def account(request, username):
 
-    user= User.objects.get(username = username)
-    profile = userProfile.objects.get(user = user)
 
-    context_dict = {'user':username, 'profile': profile}
+    userExists= User.objects.filter(username = username).exists()
+
+    if userExists:
+        user = User.objects.filter(username= username)
+        profile = userProfile.objects.get(user = user)
+
+        context_dict = {'user':username, 'profile': profile}
 
 
-    return render(request, 'scrim_finder/account.html', context_dict)
-
+        return render(request, 'scrim_finder/account.html', context_dict)
+    else:
+        return HttpResponse('User does not exist')
 
 @login_required
 def myMatches(request):
 
-    userProfile = userProfile.objects.get(user = request.user)
-    teams = userProfile.teams
+    account = userProfile.objects.get(user = request.user)
+    teams = account.teams
+
     matches = Match.objects.filter(teamsPlaying__in = teams)
 
     context_dict = {'matches': matches}
@@ -256,10 +262,11 @@ def myMatches(request):
 @login_required
 def myTeams(request):
 
-    userProfile = userProfile.objects.get(user=request.user)
-    teams = userProfile.teams
+    user = request.user
+    account = userProfile.objects.get(user=user)
+    userTeams = account.teams
 
-    context_dict = {'teams': teams}
+    context_dict = {'teams': userTeams}
 
     return render(request, 'scrim_finder/myTeams.html', context_dict)
 

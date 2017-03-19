@@ -60,7 +60,7 @@ class Match(models.Model):
     passRequired = models.BooleanField(default = False)
     date = models.DateTimeField(auto_now_add=True)
     game = models.ForeignKey(Games,on_delete = models.CASCADE)
-    teamsPlaying = models.ManyToManyField(Team)
+    teams = models.ManyToManyField(Team)
     full = models.BooleanField(default = False)
 
     def __str__(self):

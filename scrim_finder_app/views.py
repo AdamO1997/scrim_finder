@@ -293,3 +293,56 @@ def gameList(request):
     return render(request, 'scrim_finder/gameList.html', context_dict)
 
 
+@login_required
+def joinTeam(request, teamName):
+    teamToJoin = Team.objects.get(title=teamName)
+    locked = teamToJoin.locked
+    joiningPlayer = request.user
+
+
+    if locked:
+        if request.method == 'POST':
+            password = request.POST.get('password')
+            if teamToJoin.check_password(password):
+                teamToJoin.users.add(joiningPlayer)
+                teamToJoin.save(commit=True)
+                return HttpResponseRedirect(reverse('team'), teamName=teamName)
+            else:
+                return HttpResponse("Invalid password")
+        else:
+            return render(request, 'scrim_finder/joinTeam.html', {})
+    else:
+        teamToJoin.users.add(joiningPlayer)
+        teamToJoin.save(commit=True)
+        return HttpResponseRedirect(reverse('team'), teamName=teamName)
+
+
+@login_required
+def joinMatch(request, matchID):
+
+    matchToJoin = Match.objects.get(matchID=matchID)
+    full = matchToJoin.full
+    currentUser = userProfile.objects.get(user=request.user)
+
+    if not full:
+        locked = matchToJoin.locked
+        if locked:
+            if request.method == 'POST':
+                password = request.POST.get('password')
+                joiningTeamName = request.POST.get('joining team')
+                joiningTeam = Team.objects.get(title=joiningTeamName)
+                if matchToJoin.check_password(password):
+                    matchToJoin.teamsPlaying.add(joiningTeam)
+                    matchToJoin.full = True
+                    matchToJoin.save(commit=True)
+                    return HttpResponseRedirect(reverse('match'), matchID=matchID)
+                else:
+                    return HttpResponse("Invalid password")
+            else:
+                return render(request, 'scrim_finder/joinMatch.html', {'teams': currentUser.teams})
+        else:
+            teamToJoin.users.add(joiningPlayer)
+            teamToJoin.save(commit = True)
+            return HttpResponseRedirect(reverse('match'), matchID)
+    else:
+        return HttpResponse("Match is already full")

@@ -1,0 +1,16 @@
+{% extends 'scrim_finder/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Join Team
+{% endblock %}
+
+{% block body_block %}
+<h1>Login to Rango</h1>
+<form id="join_team_form" method="post" action="{% url 'joinTeam' %}">
+	{% csrf_token %}
+	Password: <input type="password" name="password" value="" size="50" />
+	<br />
+	<input type="submit" value="submit" />
+</form>
+{% endblock %}

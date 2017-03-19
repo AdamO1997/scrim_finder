@@ -53,7 +53,7 @@ def edit_match(request, matchID):
         userProfile = userProfile.objects.get(user = request.user)
         teams = userProfile.teams
         match = Match.objects.get(matchID = matchID)
-        teamsPlaying = match.teamsPlaying
+        teamsPlaying = match.teams
         inMatch = false;
 
         for team1 in teams:
@@ -252,7 +252,7 @@ def myMatches(request):
     account = userProfile.objects.get(user = request.user)
     teams = account.teams
 
-    matches = Match.objects.filter(teamsPlaying__in = teams)
+    matches = Match.objects.filter(teams__in = teams)
 
     context_dict = {'matches': matches}
 
@@ -296,16 +296,19 @@ def gameList(request):
 @login_required
 def joinTeam(request, teamName):
     teamToJoin = Team.objects.get(title=teamName)
-    locked = teamToJoin.locked
+    locked = teamToJoin.passRequired
     joiningPlayer = request.user
 
 
     if locked:
         if request.method == 'POST':
             password = request.POST.get('password')
-            if teamToJoin.check_password(password):
+
+            if teamToJoin.password == password:
                 teamToJoin.users.add(joiningPlayer)
                 teamToJoin.save(commit=True)
+                account = userProfile.objects.get(user=request.user)
+                account.teams.add(teamToJoin)
                 return HttpResponseRedirect(reverse('team'), teamName=teamName)
             else:
                 return HttpResponse("Invalid password")
@@ -325,14 +328,14 @@ def joinMatch(request, matchID):
     currentUser = userProfile.objects.get(user=request.user)
 
     if not full:
-        locked = matchToJoin.locked
+        locked = matchToJoin.passRequired
         if locked:
             if request.method == 'POST':
                 password = request.POST.get('password')
                 joiningTeamName = request.POST.get('joining team')
                 joiningTeam = Team.objects.get(title=joiningTeamName)
-                if matchToJoin.check_password(password):
-                    matchToJoin.teamsPlaying.add(joiningTeam)
+                if matchToJoin.password == password:
+                    matchToJoin.teams.add(joiningTeam)
                     matchToJoin.full = True
                     matchToJoin.save(commit=True)
                     return HttpResponseRedirect(reverse('match'), matchID=matchID)

@@ -19,7 +19,12 @@ class TeamMethodTests(TestCase):
 class userProfileMethodTests(TestCase):
     def test_user_profile_model(self):
         # Create a user
-        user, user_profile = test_utils.create_user()
+        user = User.objects.get_or_create(username="testuser", password="test1234",
+                                      first_name="Test", last_name="User", email="testuser@testuser.com")[0]
+        user.set_password(user.password)
+        user.save()
+        user_profile = userProfile.objects.get_or_create(user=user,)[0]
+        user_profile.save()
         # Check there is only the saved user and its profile in the database
         all_users = User.objects.all()
         self.assertEquals(len(all_users),1)
@@ -27,7 +32,6 @@ class userProfileMethodTests(TestCase):
         self.assertEquals(len(all_profiles),1)
         # Check profile fields were saved correctly
         all_profiles[0].user = user
-        all_profiles[0].webstie = user_profile.website
 
 # Tests of the Games class in models.py
 class GameMethodTests(TestCase):

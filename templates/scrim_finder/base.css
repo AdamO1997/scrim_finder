@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css?family=Droid+Sans");
+.navbar {
+	background-color: darkred;
+}
+
+.navbar a {
+	float: top;
+	display: block;
+	color: white;
+	text-align: center;
+	font-family: 'Droid Sans';
+	font-size: 18pt;
+}

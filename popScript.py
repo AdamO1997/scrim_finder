@@ -18,8 +18,8 @@ def populate():
              {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area'}
         ]
 
-    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':'Dota 2',
-               'teamsPlaying':''}
+    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':Games.objects.get(pk=4),
+               'teams':Team.objects.get(pk=1)}
 
         ]   
 
@@ -32,7 +32,7 @@ def populate():
     
     for match in matches:
         match = add_match(match['matchID'], match['date'], match['game'],
-                          match['teamsPlaying'])
+                          match['teams']) 
         
    
 
@@ -53,12 +53,12 @@ def add_game(title, genre):
     return g
 
 
-def add_match(ID, date, game, teamsPlaying):
+def add_match(ID, date, game, teams):
     m = Match.objects.get_or_create(matchID = ID)[0]
-    print ID
-    print date
-    print game
-    print teamsPlaying
+    m.date = date
+    m.game = game
+    m.save()
+    return m
     
 
 if __name__ == "__main__":

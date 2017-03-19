@@ -25,7 +25,18 @@ urlpatterns = [
 	url(r'^myTeams/', views.myTeams, name='myTeams'),
 	url(r'^teamList/', views.teamList, name='teamList'),
 	url(r'^register/', views.register, name='register'),
-	url(r'^logout/', views.user_logout, name = 'logout')
+	url(r'^logout/', views.user_logout, name = 'logout'),
+	url(r'^createTeam/', views.create_team, name= 'createTeam'),
+	url(r'^createMatch/', views.create_match, name = 'createMatch'),
+	url(r'^match/(?P<matchID>[\w\-]+)/', views.match, name = 'match'),
+    url(r'^team/(?P<teamName>[\w\-]+)/', views.team, name = 'team'),
+    url(r'^match/(?P<matchID>[\w\-]+)/edit', views.edit_match, name = 'editMatch'),
+    url(r'^team/(?P<teamName>[\w\-]+)/edit', views.edit_team, name = 'editTeam'),
+    url(r'^edit-account/', views.edit_account, name = 'editAccount'),
+    url(r'^login/', views.user_login, name='login'),
+    url(r'^profile/(?P<username>[\w\-]+)/', views.account, name='profile'),
+    url(r'^match/(?P<matchID>[\w\-]+)/join', views.joinMatch, name='joinMatch'),
+    url(r'^team/(?P<teamName>[\w\-]+)/join', views.team, name='joinTeam')
 ]
 
 """

@@ -9,6 +9,7 @@ class Team(models.Model):
 
     title = models.CharField(max_length = 30,unique = True)
     password = models.CharField(max_length = 15, default = "")
+    passRequired = models.BooleanField(default = False)
     full = models.BooleanField(default = False)
     image = models.ImageField(upload_to='team_images',blank = True)
     users = models.ManyToManyField('userProfile')

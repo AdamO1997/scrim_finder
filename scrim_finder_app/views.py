@@ -22,8 +22,13 @@ def create_team(request):
         form = TeamForm(request.POST)
 
         if form.is_valid():
+            profile = userProfile.objects.get(user = request.user)
             form.save(commit=True)
-
+            data = form.cleaned_data
+            title = data['title']
+            team = Team.objects.get(title = title)
+            team.users.add(profile)
+            profile.teams.add(team)
             return index(request)
         else:
             print(form.errors)
@@ -33,18 +38,23 @@ def create_team(request):
 @login_required
 def create_match(request):
     form = MatchForm()
-
+    profile = userProfile.objects.get(user = request.user)
+    teams = profile.teams.all()
     if request.method == 'POST':
         form = MatchForm(request.POST)
-
+        joiningTeamName = request.POST.get('joiningTeam')
+        joiningTeam = Team.objects.get(title=joiningTeamName)
         if form.is_valid():
             form.save(commit=True)
-
+            data = form.cleaned_data
+            matchID = data['matchID']
+            match = Match.objects.get(matchID = matchID)
+            match.teams.add(joiningTeam)
             return index(request)
         else:
             print(form.errors)
 
-    return render(request, 'scrim_finder/createMatch.html', {'form':form})
+    return render(request, 'scrim_finder/createMatch.html', {'form':form, 'teams':teams})
 
 @login_required
 def edit_match(request, matchID):
@@ -144,14 +154,30 @@ def edit_account(request):
 def team(request, teamName):
     team = Team.objects.get(title = teamName)
     players = team.users.all()
+    notInTeam = True
+    if request.user.is_authenticated():
+        profile = userProfile.objects.get(user = request.user)
+        for player in players:
+            if player == profile:
+                notInTeam = False
+                break;
 
-    return render(request, 'scrim_finder/team.html', {'team': team, 'players': players})
+    return render(request, 'scrim_finder/team.html', {'team': team, 'players': players, 'notInTeam':notInTeam})
 
 def match(request, matchID):
     match = Match.objects.get(matchID = matchID)
     teams = match.teams.all()
+    notInMatch = True
+    if request.user.is_authenticated() and match.full:
+        profile = userProfile.objects.get(user=request.user)
+        userTeams = profile.teams.all()
+        for team in teams:
+            for userTeam in userTeams:
+                if  team == userTeam:
+                    notInMatch = False
+                    break;
 
-    return render(request, 'scrim_finder/match.html', {'match': match, 'teams': teams})
+    return render(request, 'scrim_finder/match.html', {'match': match, 'teams': teams, 'notInMatch': notInMatch})
 
 
 def user_login(request):
@@ -242,7 +268,7 @@ def account(request, username):
         profile = userProfile.objects.get(user = user)
         teams = profile.teams.all()
 
-        context_dict = {'user':username, 'profile': profile}
+        context_dict = {'username':username, 'profile': profile}
         return render(request, 'scrim_finder/account.html', context_dict)
     else:
         return HttpResponse('User does not exist')
@@ -311,6 +337,7 @@ def joinTeam(request, teamName):
                 teamToJoin.save(commit=True)
                 account = userProfile.objects.get(user=request.user)
                 account.teams.add(teamToJoin)
+                account.save(commit = true)
                 return HttpResponseRedirect(reverse('team'), teamName=teamName)
             else:
                 return HttpResponse("Invalid password")

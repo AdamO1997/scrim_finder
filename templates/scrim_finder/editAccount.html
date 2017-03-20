@@ -1,0 +1,28 @@
+{% extends 'scrim_finder/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Edit Account
+{% endblock %}
+
+{% block body_block %}
+	<h1>Edit Account</h1>
+	{% if registered %}
+		<strong>Account Changes have been applied</strong>
+		<a href="{% url 'index' %}">Return to the homepage.</a><br />
+	{% else %}
+		
+		<form id="user_form" method="post" action="{% url 'editAccount' %}"
+			enctype="multipart/form-data">
+
+		{% csrf_token %}
+
+		
+		{{ user_form.as_p }}
+		{{ profile_form.as_p }}
+		
+		
+		<input type="submit" name="submit" value="Save" />
+	</form>
+	{% endif %}
+{% endblock %}

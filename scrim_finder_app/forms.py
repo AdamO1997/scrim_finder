@@ -18,15 +18,16 @@ class UserProfileForm(forms.ModelForm):
 
 class TeamForm(forms.ModelForm):
 
+
     class Meta:
         model = Team
-        exclude = ('full',)
+        exclude = ('full', 'users')
 
 class MatchForm(forms.ModelForm):
 
     class Meta:
         model = Match
-        exclude = ('full',)
+        exclude = ('full', 'teams')
 
 
     

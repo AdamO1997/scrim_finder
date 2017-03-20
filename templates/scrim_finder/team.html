@@ -12,4 +12,7 @@
 		<li><a href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a></li>
 	{% endfor %}
 	</ul>
+	{% if notInTeam and user.is_authenticated and not team.full %}
+		<a href="{% url 'joinTeam' team.title %}">Join Team</a>
+	{% endif %}
 {% endblock %}

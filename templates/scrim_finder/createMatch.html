@@ -15,7 +15,11 @@
 
 		
 		{{ form.as_p }}
-		
+		Team: <select name="joiningTeam">
+		{% for team in teams %}
+		 <option value={{ team.title }} >{{ team.title }}</option>
+		{% endfor %}
+		</select>
 		
 		
 		<input type="submit" name="submit" value="Create Match" />

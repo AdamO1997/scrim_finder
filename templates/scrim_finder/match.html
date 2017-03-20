@@ -13,4 +13,7 @@
 		<li><a href="{% url 'team' team.title %}">{{ team.title }}</a></li>
 	{% endfor %}
 	</ul>
+	{% if notInMatch and user.is_authenticated and not match.full %}
+		<a href="{% url 'joinMatch' match.matchID %}">Join Match</a>
+	{% endif %}
 {% endblock %}

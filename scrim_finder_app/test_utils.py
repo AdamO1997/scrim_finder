@@ -5,3 +5,4 @@ def create_user():
                                       first_name="Test", last_name="User", email="testuser@testuser.com")[0]
     user.set_password(user.password)
     user.save()
+    return user

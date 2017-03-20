@@ -9,7 +9,8 @@ def populate():
     
     teams = [{'title': 'TeamGO','users':'','full':False,'image':''},
              {'title': 'Assassins','users': '','full':False,'image':''},
-             {'title': 'NoMercy','users':'','full':False,'image':''}
+             {'title': 'NoMercy','users':'','full':False,'image':''},
+             {'title': 'TeampSTOP', 'users':'','full':False,'image':''}
         ]
 
     games = [{'title': 'Uncharted 4','genre': 'Adventure'},
@@ -18,16 +19,23 @@ def populate():
              {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area'}
         ]
 
-    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':Games.objects.get(pk=1),
-               'teams':Team.objects.get(pk=1)}
-
-        ]   
+      
 
     for team in teams:
         team = add_team(team['title'],team['users'],team['full'],team['image'])
 
     for game in games:
         game = add_game(game['title'],game['genre'])
+
+        
+
+    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':Games.objects.get(pk=1),
+               'teams':Team.objects.get(pk=1)},
+               {'matchID': 'UNC298372', 'date':'2017-12-11', 'game':Games.objects.get(pk =2),
+               'teams':Team.objects.get(pk=1)},
+               
+
+        ] 
 
     
     for match in matches:

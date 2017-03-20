@@ -13,55 +13,29 @@
 		</title>
 	</head>
 	<body>
-				<nav class="navbar navbar-default">
-				  <div class="container-fluid">
-					<!-- Brand and toggle get grouped for better mobile display -->
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'index' %}">Home</a>
-					</div>
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'teamList' %}">Team List</a>
-					</div>
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'gameList' %}">Games</a>
-					</div>
-					{% if user.is_authenticated %}
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'myMatches' %}">My Matches</a>
-					</div>
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'myTeams' %}">My Teams</a>
-					</div>
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
-					</div>
-					{% else %}
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'login' %}">Sign In</a>
-					</div>
-					<div class="navbar-header">
-					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					  </button>
-					  <a class="navbar-brand" href="{% url 'register' %}">Sign Up</a>
-					</div>
-					{% endif %}
-				  </div>
-				</nav>
-		<div>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <a class="navbar-brand" href="{% url 'index' %}">Scrim Finder</a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li><a href="{% url 'teamList' %}">Team List</a></li>
+				<li><a href="{% url 'gameList' %}">Games</a></li>
+			{% if user.is_authenticated %}							
+				<li><a href="{% url 'myTeams' %}">My Teams</a></li>
+				<li><a href="{% url 'myMatches' %}">My Matches</a></li>
+				<li><a href="{% url 'logout' %}">Logout</a></li>
+			{% else %}
+				<li><a href="{% url 'login' %}">Sign In</a></li>
+				<li><a href="{% url 'register' %}">Sign Up</a></li>							
+			{% endif %}
+			  </ul>
+			</div>
+		  </div>
+		</nav>
+
 			{% block body_block %}
 			{% endblock %}
 		</div>

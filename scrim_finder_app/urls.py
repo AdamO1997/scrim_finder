@@ -40,16 +40,4 @@ urlpatterns = [
     url(r'^team/(?P<teamName>[\w\-]+)/join', views.team, name='joinTeam')
 ]
 
-"""
 
-Urls to do:
-
-account
-gameList
-index
-matchList
-myMatches
-myTeams
-teamList
-
-"""

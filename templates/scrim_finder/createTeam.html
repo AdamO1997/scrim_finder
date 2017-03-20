@@ -1,0 +1,23 @@
+{% extends 'scrim_finder/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+	Create a Team
+{% endblock %}
+
+{% block body_block %}
+	<h1>Create a Match</h1>
+	
+		<form id="TeamForm" method="post" action="{% url 'createTeam' %}"
+			enctype="multipart/form-data">
+
+		{% csrf_token %}
+
+		
+		{{ form.as_p }}
+		
+		
+		
+		<input type="submit" name="submit" value="Create Team" />
+	</form>
+{% endblock %}

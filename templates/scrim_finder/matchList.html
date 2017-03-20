@@ -4,5 +4,8 @@
 {% endblock %}
 
 {% block body_block %}
-	Hello World
+	<h1>Match List</h1>
+	{% for match in matches %}
+		<a href="{% url 'match' match.matchID}">{{ match.matchID}}</a>
+	{% endfor %}
 {% endblock %}

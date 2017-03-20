@@ -14,10 +14,17 @@
 	<body>
 		<div class="navbar">
 				<ul>
-				  <li><a href="{% url 'index' %}">Home</a></li>
-				  <li><a href="{% url 'myMatches' %}">Matches</a></li>
-				  <li><a href="{% url 'myTeams' %}">Teams</a></li>
-				  <li><a href="{% url 'gameList' %}">Games</a></li>
+					<li><a href="{% url 'index' %}">Home</a></li>
+					<li><a href="{% url 'teamList' %}">Team List</a></li>
+					<li><a href="{% url 'gameList' %}">Games</a></li>
+					{% if user.is_authenticated %}
+					<li><a href="{% url 'myMatches' %}">My Matches</a></li>
+					<li><a href="{% url 'myTeams' %}">My Teams</a></li>
+					<li><a href="{% url 'logout' %}">Logout</a></li>
+					{% else %}
+					<li><a href="{% url 'login' %}">Sign in</a></li>
+					<li><a href="{% url 'register' %}">Sign Up</a></li>
+					{% endif %}
 				</ul>
 		</div>
 		<div>

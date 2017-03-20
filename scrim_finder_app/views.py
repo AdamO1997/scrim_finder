@@ -350,7 +350,7 @@ def joinMatch(request, matchID):
     else:
         return HttpResponse("Match is already full")
 
-    
+
 def game(request, gameName):
     game = Games.objects.get(game = gameName)
 

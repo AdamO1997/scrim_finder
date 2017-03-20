@@ -4,5 +4,8 @@
 {% endblock %}
 
 {% block body_block %}
-	Hello World
+	<h1>My Teams</h1>
+	{% for team in teams %}
+		<a href="{% url 'team' team.title %}">{{ team.title }}</a>
+	{% endfor %}
 {% endblock %}

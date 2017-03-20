@@ -349,3 +349,9 @@ def joinMatch(request, matchID):
             return HttpResponseRedirect(reverse('match'), matchID)
     else:
         return HttpResponse("Match is already full")
+
+    
+def game(request, gameName):
+    game = Games.objects.get(game = gameName)
+
+    return render(request, 'scrim_finder/game.html', {'game': game})

@@ -240,8 +240,6 @@ def account(request, username):
         profile = userProfile.objects.get(user = user)
 
         context_dict = {'user':username, 'profile': profile}
-
-
         return render(request, 'scrim_finder/account.html', context_dict)
     else:
         return HttpResponse('User does not exist')
@@ -250,7 +248,7 @@ def account(request, username):
 def myMatches(request):
 
     account = userProfile.objects.get(user = request.user)
-    teams = account.teams
+    teams = account.teams.all()
 
     matches = Match.objects.filter(teams__in = teams)
 
@@ -264,7 +262,8 @@ def myTeams(request):
 
     user = request.user
     account = userProfile.objects.get(user=user)
-    userTeams = account.teams
+    userTeams = account.teams.all()
+
 
     context_dict = {'teams': userTeams}
 

@@ -143,13 +143,15 @@ def edit_account(request):
 
 def team(request, teamName):
     team = Team.objects.get(title = teamName)
+    players = team.users.all()
 
-    return render(request, 'scrim_finder/team.html', {'team': team})
+    return render(request, 'scrim_finder/team.html', {'team': team, 'players': players})
 
 def match(request, matchID):
     match = Match.objects.get(matchID = matchID)
+    teams = match.teams.all()
 
-    return render(request, 'scrim_finder/match.html', {'match': match})
+    return render(request, 'scrim_finder/match.html', {'match': match, 'teams': teams})
 
 
 def user_login(request):
@@ -238,6 +240,7 @@ def account(request, username):
     if userExists:
         user = User.objects.filter(username= username)
         profile = userProfile.objects.get(user = user)
+        teams = profile.teams.all()
 
         context_dict = {'user':username, 'profile': profile}
         return render(request, 'scrim_finder/account.html', context_dict)

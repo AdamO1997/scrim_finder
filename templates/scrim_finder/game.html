@@ -1,0 +1,10 @@
+{% extends 'scrim_finder/base.html' %}
+{% block title_block %}
+	Game
+{% endblock %}
+
+{% block body_block %}
+	<h1>{{ game.game }}</h1>
+	<h2>Genre: {{ game.genre }}</h2>
+	<a href="{% url 'matchList' game.game %}"> Match List </a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'scrim_finder/base.html' %}
+{% block title_block %}
+	Team - {{ team.title }}
+{% endblock %}
+
+{% block body_block %}
+	<h1>Team Name: {{ team.title }} </h1>
+	<img src="{{ team.image }}" alt="Team Logo" height="500" width="500">
+	<h2>Players:</h2>
+	<ul>
+	{% for  player in players %}
+		<li><a href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a></li>
+	{% endfor %}
+	</ul>
+{% endblock %}

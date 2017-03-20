@@ -1,0 +1,16 @@
+{% extends 'scrim_finder/base.html' %}
+{% block title_block %}
+	Match - {{ match.matchID }}
+{% endblock %}
+
+{% block body_block %}
+	<h1>Match ID: {{ match.matchID }} </h1>
+	<img src="{{ team.image }}" alt="Team Logo" height="500" width="500">
+	<h2>Date: {{ match.date }}</h2>
+	<h2>Teams Playing:</h2>
+	<ul>
+	{% for  team in teams %}
+		<li><a href="{% url 'team' team.title %}">{{ team.title }}</a></li>
+	{% endfor %}
+	</ul>
+{% endblock %}

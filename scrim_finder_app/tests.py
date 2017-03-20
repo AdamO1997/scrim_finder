@@ -3,6 +3,7 @@ from scrim_finder_app.models import Team
 from scrim_finder_app.models import User, userProfile
 from scrim_finder_app.models import Games
 from scrim_finder_app.models import Match
+import test_utils
 
 # Tests of the team class in models.py
 class TeamMethodTests(TestCase):
@@ -19,10 +20,7 @@ class TeamMethodTests(TestCase):
 class userProfileMethodTests(TestCase):
     def test_user_profile_model(self):
         # Create a user
-        user = User.objects.get_or_create(username="testuser", password="test1234",
-                                      first_name="Test", last_name="User", email="testuser@testuser.com")[0]
-        user.set_password(user.password)
-        user.save()
+        test_utils.create_user()
         user_profile = userProfile.objects.get_or_create(user=user,)[0]
         user_profile.save()
         # Check there is only the saved user and its profile in the database
@@ -62,3 +60,38 @@ class MatchMethodTests(TestCase):
         self.assertEquals(len(match_in_database),1)
         only_match_in_database = match_in_database[0]
         self.assertEquals(only_match_in_database, match)
+
+
+
+# Tests of the login view
+class LoginViewTests(TestCase):
+    def test_login_redirects_to_index(self):
+        # Create User
+        test_utils.create_user()
+        # Access login page via POST with user data
+        try:
+            response = self.client.post(reverse('login'), {'username': 'testuser', 'password': 'test1234'})
+        except:
+                return False
+        # Check it redirects to index
+        self.assertRedirects(response, reverse('index'))
+
+    def test_incorrect_login_provides_error_message(self):
+        # Access login page with incorrect user data
+        try:
+            response = self.client.post(reverse('login'), {'username': 'wronguser', 'password': 'wrongpass'})
+        except:
+            return False
+        print response.content
+        try:
+            self.assertIn('wronguser', response.content)
+        except:
+            self.assertIn('Invalid login details supplied.', response.content)
+
+    #def test_login_form_is_displayed_correctly(self):
+
+
+
+# Tests of the logout view
+#class LogoutViewTests(TestCase):
+    #def test_logout_redirects_to_index(self):

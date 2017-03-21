@@ -22,8 +22,9 @@ class userProfileMethodTests(TestCase):
     def test_user_profile_model(self):
         # Create a user
         user = test_utils.create_user()
-        testUser = userProfile.objects.get_or_create(User = user)[0]
+        testUser = userProfile.objects.get_or_create(user = user)[0]
         testUser.save()
+        self.assertEquals(testUser.user, userProfile.objects.get(user = user).user)
         
         # Check there is only the saved user and its profile in the database
         #all_users = User.objects.all()

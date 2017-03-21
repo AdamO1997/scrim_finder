@@ -6,6 +6,6 @@
 {% block body_block %}
 	<h1>Team List</h1>
 	{% for team in teams %}
-		<a href="{% url 'team' team.title %}">{{ team.title }}</a>
+		<a href="{% url 'team' team.slug %}">{{ team.title }}</a>
 	{% endfor %}
 {% endblock %}

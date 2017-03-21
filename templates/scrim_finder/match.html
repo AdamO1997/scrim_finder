@@ -10,7 +10,7 @@
 	<h2>Teams Playing:</h2>
 	<ul>
 	{% for  team in teams %}
-		<li><a href="{% url 'team' team.title %}">{{ team.title }}</a></li>
+		<li><a href="{% url 'team' team.slug %}">{{ team.title }}</a></li>
 	{% endfor %}
 	</ul>
 	{% if notInMatch and user.is_authenticated and not match.full %}

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from django.db import models
 
@@ -13,6 +14,11 @@ class Team(models.Model):
     full = models.BooleanField(default = False)
     image = models.ImageField(upload_to='team_images',blank = True)
     users = models.ManyToManyField('userProfile')
+    slug = models.SlugField(unique = True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Team, self).save(*args, **kwargs)
 
     def _str__(self):
         return self.title
@@ -44,6 +50,11 @@ class Games(models.Model):
     game = models.CharField(max_length = 30, unique = True)
     genre = models.CharField(max_length = 15)
     icon = models.ImageField(upload_to = "game_images", blank = True)
+    slug = models.SlugField(unique = True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.game)
+        super(Games, self).save(*args,**kwargs)
 
     def __str__(self):
         return self.game

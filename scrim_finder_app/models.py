@@ -43,6 +43,7 @@ class userProfile(models.Model):
 class Games(models.Model):
     game = models.CharField(max_length = 30, unique = True)
     genre = models.CharField(max_length = 15)
+    icon = models.ImageField(upload_to = "game_images", blank = True)
 
     def __str__(self):
         return self.game

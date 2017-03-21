@@ -10,13 +10,17 @@ def populate():
     teams = [{'title': 'TeamGO','users':'','full':False,'image':''},
              {'title': 'Assassins','users': '','full':False,'image':''},
              {'title': 'NoMercy','users':'','full':False,'image':''},
-             {'title': 'TeampSTOP', 'users':'','full':False,'image':''}
+             {'title': 'TeampSTOP', 'users':'','full':False,'image':''},
+             {'title': 'Dragons', 'users':'','full':False,'image':''},
+             {'title': 'Glaswegians', 'users':'','full':False,'image':''}
         ]
 
     games = [{'title': 'Uncharted 4','genre': 'Adventure'},
              {'title': 'Overwatch', 'genre': 'FPS'},
              {'title': 'League of Legends', 'genre':'Multiplayer Online Battle Arena'},
-             {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area'}
+             {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area'},
+             {'title': 'CIV 5', 'genre': 'Multiplayer Online Battle Area'},
+             {'title': 'Titanfall', 'genre': 'FPS'}
         ]
 
       
@@ -29,10 +33,19 @@ def populate():
 
         
 
-    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':Games.objects.get(pk=1),
+    matches = [{'matchID': 'DTA198372', 'date':'2017-12-12', 'game':Games.objects.get(game="Dota 2"),
                'teams':Team.objects.get(pk=1)},
-               {'matchID': 'UNC298372', 'date':'2017-12-11', 'game':Games.objects.get(pk =2),
+               {'matchID': 'UNC298372', 'date':'2017-12-11', 'game':Games.objects.get(game="Uncharted 4"),
+               'teams':Team.objects.get(pk=2)},
+               {'matchID': 'LOL325634', 'date':'2017-12-10', 'game':Games.objects.get(game="League of Legends"),
+               'teams':Team.objects.get(pk=3)},
+               {'matchID': 'CIV998372', 'date':'2017-11-11', 'game':Games.objects.get(game="CIV 5"),
+               'teams':Team.objects.get(pk=4)},
+               {'matchID': 'TFL294572', 'date':'2017-06-11', 'game':Games.objects.get(game="Titanfall"),
                'teams':Team.objects.get(pk=1)},
+               
+               
+               
                
 
         ] 

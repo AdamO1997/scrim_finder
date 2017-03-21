@@ -4,6 +4,8 @@ from scrim_finder_app.models import User, userProfile
 from scrim_finder_app.models import Games
 from scrim_finder_app.models import Match
 from scrim_finder_app.forms import UserForm, UserProfileForm
+from scrim_finder_app.forms import TeamForm
+from scrim_finder_app.forms import MatchForm
 from django.core.urlresolvers import reverse
 import test_utils
 
@@ -18,6 +20,8 @@ class TeamMethodTests(TestCase):
         only_team_in_database = team_in_database[0]
         self.assertEquals(only_team_in_database, team)
 
+
+
 # Tests of the userProfile class in models.py
 class userProfileMethodTests(TestCase):
     def test_user_profile_model(self):
@@ -26,7 +30,6 @@ class userProfileMethodTests(TestCase):
         testUser = userProfile.objects.get_or_create(user = user)[0]
         testUser.save()
         self.assertEquals(testUser.user, userProfile.objects.get(user = user).user)
-        
         # Check there is only the saved user and its profile in the database
         #all_users = User.objects.all()
         #self.assertEquals(len(all_users),1)
@@ -35,35 +38,31 @@ class userProfileMethodTests(TestCase):
         # Check profile fields were saved correctly
         #all_profiles[0].user = user
 
+
+
 # Tests of the Games class in models.py
 class GameMethodTests(TestCase):
     def test_create_games_for_matches(self):
-
-        ###### Fixed
-
+        ##
+        #  Fixed
         #create new game
         fifa_game = Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
-
         #create new match with the game as the new game
         newMatch = Match(matchID="TestMatch", game=fifa_game)
-
         #save the new match
         newMatch.save()
-        
         # Check to see if it was saved properly
         correct_game = Games.objects.get(game = "Fifa 17")
         self.assertEquals(correct_game,fifa_game)
         self.assertEquals(correct_game.game, "Fifa 17")
         self.assertEquals(correct_game.genre,"Sports")
 
+
+
 # Tests of the Match class in models.py
 class MatchMethodTests(TestCase):
     def test_create_new_match(self):
-
-
-        ######## Fixed
-
-        
+        ## Fixed
         # create sample match
         fifa_game = Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
         match = Match(matchID="TestMatch", game = Games.objects.get(game = "Fifa 17"))
@@ -86,6 +85,7 @@ class LoginViewTests(TestCase):
         # Check it redirects to index
         self.assertRedirects(response, reverse('index'))
 
+
     def test_incorrect_login_provides_error_message(self):
         # Access login page with incorrect user data
         try:
@@ -97,6 +97,7 @@ class LoginViewTests(TestCase):
             self.assertIn('wronguser', response.content)
         except:
             self.assertIn('Invalid login details supplied.', response.content)
+
 
     def test_login_form_displayed_correctly(self):
         # Access login page
@@ -130,6 +131,8 @@ class LogoutViewTests(TestCase):
             return False
         self.assertRedirects(response, reverse('index'))
 
+
+
 # Tests of the registration view
 class RegistrationViewTests(TestCase):
     def test_registration_form_displayed_correctly(self):
@@ -140,7 +143,7 @@ class RegistrationViewTests(TestCase):
             return False
         # Check display and format of form
         # Header
-        self.assertIn('<h1>Register with Scrim Finder</h1>', response.content)
+        self.assertIn('<h1>Register with Scrim Finder</h1>'.lower(), response.content.lower())
         # Check form in response context is an instance of UserForm
         self.assertTrue(isinstance(response.context['user_form'], UserForm))
         # Check form in response context is an instance of UserProfileForm
@@ -153,11 +156,82 @@ class RegistrationViewTests(TestCase):
         # Correct submit button
         self.assertIn('input type="submit" value="submit"', response.content)
 
-#Test ideas
-#player has no matches message
-#player has no team message
-#player tries to create a match in the past
-#test to see if all views use a template, and template exists
+
+
+# Tests of the createTeam View
+class CreateTeamViewTests(TestCase):
+    # won't work
+    # reverse url isn't giving right url, similar to all the template errors
+    def test_create_team_form_displayed_correctly(self):
+        # Access the create team page
+        try:
+            response = self.client.get(reverse('createTeam'))
+        except:
+            return False
+        # Check display and format of form
+        # Header
+        self.assertIn('<h1>Create a Team</h1>'.lower(), response.content.lower())
+        # Check form in response context is an instance of UserForm
+        self.assertTrue(isinstance(response.context['TeamForm'], TeamForm))
+        team_form = TeamForm()
+        # Check form is displayed correctly
+        self.assertEquals(response.context['TeamForm'].as_p(), team_form.as_p())
+        # Correct submit button
+        self.assertIn('input type="submit" value="Create Team"', response.content)
+
+
+
+# Tests of the createMatch View
+class CreateMatchViewTests(TestCase):
+    # won't work
+    # reverse url isn't giving right url
+    # similar problem to above and to template errors
+    def test_create_match_form_displayed_correctly(self):
+        # Access the create match page
+        try:
+            response = self.client.get(reverse('createMatch'))
+        except:
+            return False
+        # Check display and format of form
+        # Header
+        self.assertIn('<h1>Create a Match</h1>'.lower(), response.content.lower())
+        # Check form in response context is an instance of UserForm
+        self.assertTrue(isinstance(response.context['MatchForm'], MatchForm))
+        match_form = MatchForm()
+        # Check form is displayed correctly
+        self.assertEquals(response.context['MatchForm'].as_p(), match_form.as_p())
+        # Correct submit button
+        self.assertIn('input type="submit" value="Create Match"', response.content)
+
+
+
+# Tests of the editAccount View
+class EditAccountViewTests(TestCase):
+    def test_edit_account_form_displayed_correctly(self):
+        # Create User and Login
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
+        # Access the edit account page
+        try:
+            response = self.client.get(reverse('editAccount'))
+        except:
+            return False
+        # Check display and format of form
+        # Header
+        self.assertIn('<h1>Edit Account</h1>'.lower(), response.content.lower())
+        # Check form in response context is an instance of UserForm
+        self.assertTrue(isinstance(response.context['user_form'], UserForm))
+        # Check form in response context is an instance of UserProfileForm
+        self.assertTrue(isinstance(response.context['profile_form'], UserProfileForm))
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        # Check form is displayed correctly
+        self.assertEquals(response.context['user_form'].as_p(), user_form.as_p())
+        self.assertEquals(response.context['profile_form'].as_p(), profile_form.as_p())
+        # Correct submit button
+        self.assertIn('input type="submit" value="submit"', response.content)
+
+
 
 class ViewsUsingTemplateTests(TestCase):
     def test_index_using_template(self):
@@ -238,6 +312,7 @@ class ViewsUsingTemplateTests(TestCase):
         self.assertTemplateUsed(response, 'scrim_finder/joinMatch.html')
 
 
+
 class UrlLinkTests():
     def test_url_reference_index_page_when_logged(self):
         # Create user and log in
@@ -257,6 +332,7 @@ class UrlLinkTests():
         self.assertIn(reverse('teamList'), response.content)
         self.assertIn(reverse('editAccount'), response.content)
 
+
     def test_url_reference_index_page_not_logged(self):
         # Access index page
         response = self.client.get(reverse('index'))
@@ -266,3 +342,11 @@ class UrlLinkTests():
         self.assertIn(reverse('register'), response.content)
         self.assertIn(reverse('gameList'), response.content)
         self.assertIn(reverse('teamList'), response.content)
+
+
+
+#Test ideas
+#player has no matches message
+#player has no team message
+#player tries to create a match in the past
+#test to see if all views use a template, and template exists

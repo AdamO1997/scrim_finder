@@ -3,6 +3,7 @@ from scrim_finder_app.models import Team
 from scrim_finder_app.models import User, userProfile
 from scrim_finder_app.models import Games
 from scrim_finder_app.models import Match
+from scrim_finder_app.forms import UserForm, UserProfileForm
 from django.core.urlresolvers import reverse
 import test_utils
 
@@ -97,13 +98,60 @@ class LoginViewTests(TestCase):
         except:
             self.assertIn('Invalid login details supplied.', response.content)
 
-    #def test_login_form_is_displayed_correctly(self):
+    def test_login_form_displayed_correctly(self):
+        # Access login page
+        try:
+            response = self.client.get(reverse('login'))
+        except:
+            return False
+        # Check display and format of form
+        # Header
+        self.assertIn('<h1>Login to Scrim Finder</h1>'.lower(), response.content.lower())
+        # Username label and text input
+        self.assertIn('Username:', response.content)
+        self.assertIn('input type="text" name="username" value="" size="50"', response.content)
+        # Password label and password input
+        self.assertIn('Password:', response.content)
+        self.assertIn('input type="password" name="password" value="" size="50"', response.content)
+        # Correct submit button
+        self.assertIn('input type="submit" value="submit"', response.content)
 
 
 
 # Tests of the logout view
-#class LogoutViewTests(TestCase):
-    #def test_logout_redirects_to_index(self):
+class LogoutViewTests(TestCase):
+    def test_logout_redirects_to_index(self):
+        # Create user and log in
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
+        try:
+            response = self.logout()
+        except:
+            return False
+        self.assertRedirects(response, reverse('index'))
+
+# Tests of the registration view
+class RegistrationViewTests(TestCase):
+    def test_registration_form_displayed_correctly(self):
+        # Access registration page
+        try:
+            response = self.client.get(reverse('register'))
+        except:
+            return False
+        # Check display and format of form
+        # Header
+        self.assertIn('<h1>Register with Scrim Finder</h1>', response.content)
+        # Check form in response context is an instance of UserForm
+        self.assertTrue(isinstance(response.context['user_form'], UserForm))
+        # Check form in response context is an instance of UserProfileForm
+        self.assertTrue(isinstance(response.context['profile_form'], UserProfileForm))
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+        # Check form is displayed correctly
+        self.assertEquals(response.context['user_form'].as_p(), user_form.as_p())
+        self.assertEquals(response.context['profile_form'].as_p(), profile_form.as_p())
+        # Correct submit button
+        self.assertIn('input type="submit" value="submit"', response.content)
 
 #Test ideas
 #player has no matches message

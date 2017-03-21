@@ -6,6 +6,6 @@
 {% block body_block %}
 	<h1>Match List</h1>
 	{% for match in matches %}
-		<a href="{% url 'match' match.matchID}">{{ match.matchID}}</a>
+		<a href="{% url 'match' match.matchID %}">{{ match.matchID }}</a>
 	{% endfor %}
 {% endblock %}

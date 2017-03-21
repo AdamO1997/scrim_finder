@@ -16,4 +16,7 @@
 	{% if notInMatch and user.is_authenticated and not match.full %}
 		<a href="{% url 'joinMatch' match.matchID %}">Join Match</a>
 	{% endif %}
+	{% if not notInMatch %}
+		<a href="{% url 'editMatch' match.matchID %}">Edit Match</a>
+	{% endif %}
 {% endblock %}

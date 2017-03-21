@@ -2,15 +2,17 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Join Team
+	Join Match
 {% endblock %}
 
 {% block body_block %}
 <h1>Login to Rango</h1>
-<form id="join_team_form" method="post" action="{% url 'joinTeam' %}">
+<form id="join_team_form" method="post" action="{% url 'joinMatch' match.matchID %}">
 	{% csrf_token %}
-	Password: <input type="text" name="password" value="" size="50" />
-	<br />
+	{% if locked %}
+		Password: <input type="text" name="password" value="" size="50" />
+		<br />
+	{% endif %}
 	Team: <select name="joiningTeam">
 	{% for team in teams %}
 	 <option value={{ team.title }} >{{ team.title }}</option>

@@ -7,7 +7,7 @@
 
 {% block body_block %}
 <h1>Login to Rango</h1>
-<form id="join_team_form" method="post" action="{% url 'joinTeam' %}">
+<form id="join_team_form" method="post" action="{% url 'joinTeam' team.title %}">
 	{% csrf_token %}
 	Password: <input type="text" name="password" value="" size="50" />
 	<br />

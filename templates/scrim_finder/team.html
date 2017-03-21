@@ -15,4 +15,7 @@
 	{% if notInTeam and user.is_authenticated and not team.full %}
 		<a href="{% url 'joinTeam' team.title %}">Join Team</a>
 	{% endif %}
+	{% if not notInTeam %}
+		<a href="{% url 'editTeam' team.title %}">Edit Team</a>
+	{% endif %}
 {% endblock %}

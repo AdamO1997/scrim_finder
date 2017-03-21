@@ -98,10 +98,11 @@ def edit_team(request, teamName):
     if request.user.is_authenticated():
         inTeam = False
         user = request.user
-        teams = userProfile.objects.get(user = user)
+        profile = userProfile.objects.get(user = user)
+        teams = profile.teams.all()
         instance = Team.objects.get(title=teamName)
-        for team in teams:
-            if instance == team:
+        for currentTeam in teams:
+            if instance == currentTeam:
                 inTeam = True
 
         if inTeam:
@@ -117,7 +118,7 @@ def edit_team(request, teamName):
             else:
                 form = TeamForm(instance=instance)
 
-            return render(request, 'scrim_finder/editTeam.html', {'form': form})
+            return render(request, 'scrim_finder/editTeam.html', {'form': form, 'team':teamName})
 
         else:
             return HttpResponse('You are not on this team')
@@ -325,7 +326,7 @@ def gameList(request):
 def joinTeam(request, teamName):
     teamToJoin = Team.objects.get(title=teamName)
     locked = teamToJoin.passRequired
-    joiningPlayer = request.user
+    joiningPlayer = userProfile.objects.get(user = request.user)
 
 
     if locked:
@@ -334,19 +335,19 @@ def joinTeam(request, teamName):
 
             if teamToJoin.password == password:
                 teamToJoin.users.add(joiningPlayer)
-                teamToJoin.save(commit=True)
-                account = userProfile.objects.get(user=request.user)
-                account.teams.add(teamToJoin)
-                account.save(commit = true)
-                return HttpResponseRedirect(reverse('team'), teamName=teamName)
+                joiningPlayer.teams.add(teamToJoin)
+
+                return team(request, teamName)
             else:
                 return HttpResponse("Invalid password")
         else:
-            return render(request, 'scrim_finder/joinTeam.html', {})
+            return render(request, 'scrim_finder/joinTeam.html', {'team': teamToJoin})
+
     else:
         teamToJoin.users.add(joiningPlayer)
-        teamToJoin.save(commit=True)
-        return HttpResponseRedirect(reverse('team'), teamName=teamName)
+        joiningPlayer.teams.add(teamToJoin)
+
+        return team(request, teamName)
 
 
 @login_required
@@ -358,24 +359,28 @@ def joinMatch(request, matchID):
 
     if not full:
         locked = matchToJoin.passRequired
-        if locked:
-            if request.method == 'POST':
+
+        if request.method == 'POST':
+
+            joiningTeamName = request.POST.get('joiningTeam')
+            joiningTeam = Team.objects.get(title=joiningTeamName)
+            if locked:
                 password = request.POST.get('password')
-                joiningTeamName = request.POST.get('joining team')
-                joiningTeam = Team.objects.get(title=joiningTeamName)
                 if matchToJoin.password == password:
                     matchToJoin.teams.add(joiningTeam)
                     matchToJoin.full = True
-                    matchToJoin.save(commit=True)
-                    return HttpResponseRedirect(reverse('match'), matchID=matchID)
+                    matchToJoin.save(commit = True)
+                    return match(request, matchID)
                 else:
                     return HttpResponse("Invalid password")
             else:
-                return render(request, 'scrim_finder/joinMatch.html', {'teams': currentUser.teams})
+                matchToJoin.teams.add(joiningTeam)
+                matchToJoin.full = True
+                matchToJoin.save(commit=True)
+                return HttpResponseRedirect(reverse('match'), matchID=matchID)
         else:
-            teamToJoin.users.add(joiningPlayer)
-            teamToJoin.save(commit = True)
-            return HttpResponseRedirect(reverse('match'), matchID)
+            return render(request, 'scrim_finder/joinMatch.html', {'teams': currentUser.teams.all(), 'locked': locked, 'match':matchToJoin})
+
     else:
         return HttpResponse("Match is already full")
 

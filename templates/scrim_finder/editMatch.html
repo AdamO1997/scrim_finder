@@ -2,20 +2,24 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Edit Team
+	Create a Match
 {% endblock %}
 
 {% block body_block %}
-	<h1>Edit Team</h1>
+	<h1>Edit Match</h1>
 	
-		<form id="TeamForm" method="post" action="{% url 'editTeam' team%}"
+		<form id="MatchForm" method="post" action="{% url 'editMatch' %}"
 			enctype="multipart/form-data">
 
 		{% csrf_token %}
 
 		
 		{{ form.as_p }}
-		
+		Team: <select name="joiningTeam">
+		{% for team in teams %}
+		 <option value={{ team.title }} >{{ team.title }}</option>
+		{% endfor %}
+		</select>
 		
 		
 		<input type="submit" name="submit" value="Save Changes" />

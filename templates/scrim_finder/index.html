@@ -31,50 +31,130 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 
 	
 
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-	  <!-- Indicators -->
-	  <ol class="carousel-indicators">
-		<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-		<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-		<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-	  </ol>
+	<div id="teams" class="carousel slide" data-ride="carousel">
 
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-		<div class="item active">
+	  
+	  	<div class="item active">
 		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
 		  <div class="carousel-caption">
-			...
+			MAIN TEAM
 		  </div>
 		</div>
+	  
+	  {% for currentTeam in teams %}
+	  
 		<div class="item">
 		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
 		  <div class="carousel-caption">
-			SLider
+			{{ currentTeam.title }}
 		  </div>
 		</div>
-		Slider more please
+	  
+	  {% endfor %}
+
 	  </div>
 
 	  <!-- Controls -->
-	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+	  <a class="left carousel-control" href="#teams" role="button" data-slide="prev">
 		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 		<span class="sr-only">Previous</span>
 	  </a>
-	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+	  <a class="right carousel-control" href="#teams" role="button" data-slide="next">
 		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 		<span class="sr-only">Next</span>
 	  </a>
 	</div>
+	
+	
 
 </div>
 
 <div class="col-sm-6 col-md-6">
 <h2>Current Matches</h2>
+
+	<div id="matches" class="carousel slide" data-ride="carousel">
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+	  
+	  	<div class="item active">
+		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <div class="carousel-caption">
+			MAIN MATCH
+		  </div>
+		</div>
+	  
+	  {% for currentMatch in matches %}
+	  
+		<div class="item">
+		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <div class="carousel-caption">
+			{{ currentMatch.matchID }}
+		  </div>
+		</div>
+	  
+	  {% endfor %}
+
+	  </div>
+
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#matches" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#matches" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	  </a>
+	</div>
+
+
 </div>
 
 <div class="col-sm-6 col-md-6">
 <h2>Games</h2>
+
+
+	<div id="games" class="carousel slide" data-ride="carousel">
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+	  
+	  	<div class="item active">
+		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <div class="carousel-caption">
+			MAIN GAME
+		  </div>
+		</div>
+	  
+	  {% for currentGame in games %}
+	  
+		<div class="item">
+		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <div class="carousel-caption">
+			{{ currentGame.game }}
+		  </div>
+		</div>
+	  
+	  {% endfor %}
+
+	  </div>
+
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#games" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#games" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	  </a>
+	</div>
+
+
+
 </div>
 
 

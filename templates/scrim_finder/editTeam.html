@@ -8,7 +8,7 @@
 {% block body_block %}
 	<h1>Edit Team</h1>
 	
-		<form id="TeamForm" method="post" action="{% url 'editTeam' team%}"
+		<form id="TeamForm" method="post" action="{% url 'editTeam' team %}"
 			enctype="multipart/form-data">
 
 		{% csrf_token %}

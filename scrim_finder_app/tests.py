@@ -138,7 +138,8 @@ class ViewsUsingTemplateTests(TestCase):
         self.assertTemplateUsed(response, 'scrim_finder/editAccount.html')
 
     def test_team_using_template(self):
-        response = self.client.get(reverse('team'))
+        team = Team.objects.get_or_create(title="TeamGO")[0]
+        response = self.client.get(reverse('team', args =(team,)))
         self.assertTemplateUsed(response, 'scrim_finder/team.html')
 
     def test_match_using_template(self):
@@ -156,7 +157,7 @@ class ViewsUsingTemplateTests(TestCase):
     def test_account_using_template(self):
         user = test_utils.create_user()
         self.client.login(username='testuser', password='test1234')
-        response = self.client.get(reverse('account',args=['testuser']))
+        response = self.client.get(reverse('account',args=()))
         self.assertTemplateUsed(response, 'scrim_finder/account.html')
 
     def test_myMatches_using_template(self):
@@ -185,6 +186,35 @@ class ViewsUsingTemplateTests(TestCase):
 
     def test_joinMatch_using_template(self):
         matchID = "DTA198372"
-        response = self.client.get(reverse('joinMatch', args=[matchID]))
+        response = self.client.get(reverse('joinMatch', args=(matchID,)))
         self.assertTemplateUsed(response, 'scrim_finder/joinMatch.html')
 
+
+class UrlLinkTests():
+    def test_url_reference_index_page_when_logged(self):
+        # Create user and log in
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
+        # Access index page
+        response = self.client.get(reverse('index'))
+        # Check links that appear for logged in person
+        self.assertIn(reverse('index'), response.content)
+        self.assertIn(reverse('logout'), response.content)
+        self.assertIn(reverse('account'), response.content)
+        self.assertIn(reverse('myGames'), response.content)
+        self.assertIn(reverse('myTeams'), response.content)
+        self.assertIn(reverse('editMatches'), response.content)
+        self.assertIn(reverse('editTeams'), response.content)
+        self.assertIn(reverse('gameList'), response.content)
+        self.assertIn(reverse('teamList'), response.content)
+        self.assertIn(reverse('editAccount'), response.content)
+
+    def test_url_reference_index_page_not_logged(self):
+        # Access index page
+        response = self.client.get(reverse('index'))
+        # Check links that appear for not logged in person
+        self.assertIn(reverse('index'), response.content)
+        self.assertIn(reverse('login'), response.content)
+        self.assertIn(reverse('register'), response.content)
+        self.assertIn(reverse('gameList'), response.content)
+        self.assertIn(reverse('teamList'), response.content)

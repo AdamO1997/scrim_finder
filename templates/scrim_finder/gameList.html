@@ -6,6 +6,15 @@
 {% block body_block %}
 	<h1>Game List</h1>
 	{% for currentGame in games %}
-		<a href="{% url 'game' currentGame.game %}">{{ currentGame.game }}</a>
+	
+	<div align="center" class="col-sm-3 col-md-3">
+		<br>
+		<a href="{% url 'game' currentGame.game %}">
+		<img src="https://v.cdn.vine.co/r/avatars/453D86296A1289362655722774528_4dd5b70336c.5.0.jpg?versionId=J6Im0IzgdF5JyZor8xewmG5.DK8BOzI."><br>
+		<h2>{{ currentGame.game }}</h2>
+		</a>
+		<br>
+	</div>
+		
 	{% endfor %}
 {% endblock %}

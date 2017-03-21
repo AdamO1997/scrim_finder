@@ -21,32 +21,35 @@ class TeamMethodTests(TestCase):
 class userProfileMethodTests(TestCase):
     def test_user_profile_model(self):
         # Create a user
-        test_utils.create_user()
-        user_profile = userProfile.objects.get_or_create(user=User,)[0]
-        user_profile.save()
+        user = test_utils.create_user()
+        testUser = userProfile.objects.get_or_create(User = user)[0]
+        testUser.save()
+        
         # Check there is only the saved user and its profile in the database
-        all_users = User.objects.all()
-        self.assertEquals(len(all_users),1)
-        all_profiles = userProfile.objects.all()
-        self.assertEquals(len(all_profiles),1)
+        #all_users = User.objects.all()
+        #self.assertEquals(len(all_users),1)
+        #all_profiles = userProfile.objects.all()
+        #self.assertEquals(len(all_profiles),1)
         # Check profile fields were saved correctly
-        all_profiles[0].user = user
+        #all_profiles[0].user = user
 
 # Tests of the Games class in models.py
 class GameMethodTests(TestCase):
     def test_create_games_for_matches(self):
-        newMatch = Match(matchID="TestMatch")
+
+        ###### Fixed
+
+        #create new game
+        fifa_game = Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
+
+        #create new match with the game as the new game
+        newMatch = Match(matchID="TestMatch", game=fifa_game)
+
+        #save the new match
         newMatch.save()
-        # Create game for match
-        fifa_game = Game()
-        fifa_game.match = newMatch
-        fifa_game.game = "Fifa 17"
-        fifa_game.genre = "Sports"
-        # Check to see if it was saved
-        games = newMatch.game_set.all()
-        self.assertEquals(games.count(),1)
+        
         # Check to see if it was saved properly
-        correct_game = games[0]
+        correct_game = Games.objects.get(game = "Fifa 17")
         self.assertEquals(correct_game,fifa_game)
         self.assertEquals(correct_game.game, "Fifa 17")
         self.assertEquals(correct_game.genre,"Sports")
@@ -54,13 +57,17 @@ class GameMethodTests(TestCase):
 # Tests of the Match class in models.py
 class MatchMethodTests(TestCase):
     def test_create_new_match(self):
-        match = Match(matchID="TestMatch")
+
+
+        ######## Fixed
+
+        
+        # create sample match
+        fifa_game = Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
+        match = Match(matchID="TestMatch", game = Games.objects.get(game = "Fifa 17"))
         match.save()
         # Check match is in database
-        match_in_database = Match.objects.all()
-        self.assertEquals(len(match_in_database),1)
-        only_match_in_database = match_in_database[0]
-        self.assertEquals(only_match_in_database, match)
+        self.assertEquals(match, Match.objects.get(matchID = "TestMatch"))
 
 
 

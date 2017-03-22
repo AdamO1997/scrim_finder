@@ -71,7 +71,7 @@ class Match(models.Model):
     matchID = models.CharField(max_length = 10,unique = True)
     password = models.CharField(max_length = 15, blank = True)
     passRequired = models.BooleanField(default = False)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
     game = models.ForeignKey(Games,on_delete = models.CASCADE)
     teams = models.ManyToManyField(Team)
     full = models.BooleanField(default = False)

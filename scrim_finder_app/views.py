@@ -291,9 +291,12 @@ def myMatches(request):
 def myTeams(request):
 
     user = request.user
-    account = userProfile.objects.get(user=user)
-    userTeams = account.teams.all()
-
+    try:
+        account = userProfile.objects.get(user=user)
+        userTeams = account.teams.all()
+    except:
+        account = None
+        userTeams = account
 
     context_dict = {'teams': userTeams}
 

@@ -296,6 +296,8 @@ class ViewsUsingTemplateTests(TestCase):
     #    self.assertTemplateUsed(response, 'scrim_finder/account.html')
 
     def test_myMatches_using_template(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         response = self.client.get(reverse('myMatches'))
         self.assertTemplateUsed(response, 'scrim_finder/myMatches.html')
 

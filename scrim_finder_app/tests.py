@@ -252,9 +252,13 @@ class ViewsUsingTemplateTests(TestCase):
         self.assertTemplateUsed(response, 'scrim_finder/createMatch.html')
 
     # not working
-    #def test_edit_match_using_template(self):
-    #    response = self.client.get(reverse('editMatch'))
-    #    self.assertTemplateUsed(response, 'scrim_finder/editMatch.html')
+    def test_edit_match_using_template(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
+        match = Match(matchID="TestMatch", game=Games.objects.get(game="Fifa 17"), date='2017-12-12')
+        match.save()
+        response = self.client.get(reverse('editMatch', args=(matchID,)))
+        self.assertTemplateUsed(response, 'scrim_finder/editMatch.html')
 
     # not working
     #def test_edit_team_using_template(self):

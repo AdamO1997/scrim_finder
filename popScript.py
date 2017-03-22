@@ -15,12 +15,12 @@ def populate():
              {'title': 'Glaswegians', 'users':'','full':False,'image':'team_images/glaswegians.jpg'}
         ]
 
-    games = [{'title': 'Uncharted 4','genre': 'Adventure'},
-             {'title': 'Overwatch', 'genre': 'FPS'},
-             {'title': 'League of Legends', 'genre':'Multiplayer Online Battle Arena'},
-             {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area'},
-             {'title': 'CIV 5', 'genre': 'Multiplayer Online Battle Area'},
-             {'title': 'Titanfall', 'genre': 'FPS'}
+    games = [{'title': 'Uncharted 4','genre': 'Adventure', 'icon':'game_logos/uncharted4.png'},
+             {'title': 'Overwatch', 'genre': 'FPS', 'icon':'game_logos/overwatch.png'},
+             {'title': 'League of Legends', 'genre':'Multiplayer Online Battle Arena', 'icon':'lol.png'},
+             {'title': 'Dota 2', 'genre': 'Multiplayer Online Battle Area','icon':'dota2.png'},
+             {'title': 'CIV 5', 'genre': 'Multiplayer Online Battle Area','icon':'civ5.png'},
+             {'title': 'Titanfall', 'genre': 'FPS', 'icon':'titanfall.png'}
         ]
 
       
@@ -29,7 +29,7 @@ def populate():
         team = add_team(team['title'],team['users'],team['full'],team['image'])
 
     for game in games:
-        game = add_game(game['title'],game['genre'])
+        game = add_game(game['title'],game['genre'],game['icon'])
 
         
 
@@ -66,8 +66,9 @@ def add_team(title,users,full,image):
     t.save()
     return t
 
-def add_game(title, genre):
+def add_game(title, genre, icon):
     g = Games.objects.get_or_create(game = title)[0]
+    g.icon = icon
     g.game = title
     g.genre = genre
     g.save()

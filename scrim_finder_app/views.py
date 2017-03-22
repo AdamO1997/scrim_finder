@@ -265,11 +265,11 @@ def account(request, username):
     userExists= User.objects.filter(username = username).exists()
 
     if userExists:
-        user = User.objects.filter(username= username)
-        profile = userProfile.objects.get(user = user)
+        userToView = User.objects.filter(username= username)
+        profile = userProfile.objects.get(user = userToView)
         teams = profile.teams.all()
 
-        context_dict = {'username':username, 'profile': profile}
+        context_dict = {'username':username, 'profile': profile, 'teams': teams}
         return render(request, 'scrim_finder/account.html', context_dict)
     else:
         return HttpResponse('User does not exist')

@@ -32,10 +32,10 @@ ALLOWED_HOSTS = [
 
 ]
 
-env.project_root = '/home/AdamO1997/scrim_finder'
+
 
 def deploy_static():
-    with cd(env.project_root):
+    with cd(BASE_DIR):
         run('./manage.py collectstatic -v0 --noinput')
 
 # Application definition

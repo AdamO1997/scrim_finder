@@ -7,12 +7,12 @@ from scrim_finder_app.models import userProfile,Team,Games,Match
 
 def populate():
     
-    teams = [{'title': 'TeamGO','users':'','full':False,'image':''},
-             {'title': 'Assassins','users': '','full':False,'image':''},
-             {'title': 'NoMercy','users':'','full':False,'image':''},
-             {'title': 'TeampSTOP', 'users':'','full':False,'image':''},
-             {'title': 'Dragons', 'users':'','full':False,'image':''},
-             {'title': 'Glaswegians', 'users':'','full':False,'image':''}
+    teams = [{'title': 'TeamGO','users':'','full':False,'image':'team_images/Koala.jpg'},
+             {'title': 'Assassins','users': '','full':False,'image':'team_images/assassins.jpg'},
+             {'title': 'NoMercy','users':'','full':False,'image':'team_images/nomercy.png'},
+             {'title': 'TeampSTOP', 'users':'','full':False,'image':'team_images/stop.png'},
+             {'title': 'Dragons', 'users':'','full':False,'image':'team_images/dragons.jpg'},
+             {'title': 'Glaswegians', 'users':'','full':False,'image':'team_images/glaswegians.jpg'}
         ]
 
     games = [{'title': 'Uncharted 4','genre': 'Adventure'},

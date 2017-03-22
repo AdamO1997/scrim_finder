@@ -43,7 +43,7 @@ def create_match(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)
         joiningTeamName = request.POST.get('joiningTeam')
-        joiningTeam = Team.objects.get(title=joiningTeamName)
+        joiningTeam = Team.objects.get(slug=joiningTeamName)
         if form.is_valid():
             form.save(commit=True)
             data = form.cleaned_data

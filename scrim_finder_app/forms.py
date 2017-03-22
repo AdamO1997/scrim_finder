@@ -21,7 +21,7 @@ class TeamForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        exclude = ('full', 'users')
+        exclude = ('full', 'users', 'slug')
 
 class MatchForm(forms.ModelForm):
 

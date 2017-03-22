@@ -363,7 +363,7 @@ def joinMatch(request, matchID):
         if request.method == 'POST':
 
             joiningTeamName = request.POST.get('joiningTeam')
-            joiningTeam = Team.objects.get(title=joiningTeamName)
+            joiningTeam = Team.objects.get(slug=joiningTeamName)
             if locked:
                 password = request.POST.get('password')
                 if matchToJoin.password == password:

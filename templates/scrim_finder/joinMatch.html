@@ -15,7 +15,7 @@
 	{% endif %}
 	Team: <select name="joiningTeam">
 	{% for team in teams %}
-	 <option value={{ team.title }} >{{ team.title }}</option>
+	 <option value={{ team.slug }} >{{ team.title }}</option>
 	{% endfor %}
 	</select>
 	<input type="submit" value="submit" />

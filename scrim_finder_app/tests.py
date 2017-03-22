@@ -6,8 +6,10 @@ from scrim_finder_app.models import Match
 from scrim_finder_app.forms import UserForm, UserProfileForm
 from scrim_finder_app.forms import TeamForm
 from scrim_finder_app.forms import MatchForm
+from django.conf import settings
 from django.core.urlresolvers import reverse
 import test_utils
+import os.path
 
 # Tests of the team class in models.py
 class TeamMethodTests(TestCase):
@@ -294,7 +296,10 @@ class ViewsUsingTemplateTests(TestCase):
         self.assertTemplateUsed(response, 'scrim_finder/myMatches.html')
 
     def test_myTeams_using_template(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         response = self.client.get(reverse('myTeams'))
+        print response
         self.assertTemplateUsed(response, 'scrim_finder/myTeams.html')
 
     # not working
@@ -304,6 +309,7 @@ class ViewsUsingTemplateTests(TestCase):
 
     def test_teamList_using_template(self):
         response = self.client.get(reverse('teamList'))
+        #print response
         self.assertTemplateUsed(response, 'scrim_finder/teamList.html')
 
     def test_gameList_using_template(self):
@@ -316,9 +322,94 @@ class ViewsUsingTemplateTests(TestCase):
     #    self.assertTemplateUsed(response, 'scrim_finder/joinTeam.html')
 
     def test_joinMatch_using_template(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         matchID = "DTA198372"
         response = self.client.get(reverse('joinMatch', args=(matchID,)))
+        print response
         self.assertTemplateUsed(response, 'scrim_finder/joinMatch.html')
+
+
+class TemplateExistsTests(TestCase):
+    def test_base_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/base.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_account_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/account.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_createMatch_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/createMatcg.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_createTeam_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/Team.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_editAccount_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/editAccount.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_editMatch_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/editMatch.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_editTeam_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/editTeam.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_game_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/game.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_gameList_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/gameList.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_index_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/index.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_joinMatch_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/joinMatch.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_joinTeam_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/joinTeam.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_login_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/login.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_match_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/match.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_matchList_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/matchList.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_myMatches_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/myMatches.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_myTeams_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/myTeams.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_register_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/register.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_team_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/team.html'
+        self.assertTrue(os.path.isfile(path_to_base))
+
+    def test_teamList_template_exists(self):
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/teamList.html'
+        self.assertTrue(os.path.isfile(path_to_base))
 
 
 

@@ -35,7 +35,7 @@ class Team(models.Model):
 class userProfile(models.Model):
 
     user = models.OneToOneField(User)
-    picture = models.ImageField(upload_to='profile_images',blank = True)
+    picture = models.ImageField(upload_to='profile_images',default = 'defaultUser.PNG')
     teams = models.ManyToManyField(Team)
 
     def __str__(self):

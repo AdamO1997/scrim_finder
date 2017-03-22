@@ -131,6 +131,7 @@ def edit_account(request):
         user = request.user
         userProfileInstance = userProfile.objects.get(user = user)
 
+
         if request.method == 'POST':
             userForm = UserForm(request.POST, instance=user)
             userProfileForm = UserProfileForm(request.POST, instance = userProfileInstance)
@@ -277,8 +278,13 @@ def account(request, username):
 @login_required
 def myMatches(request):
 
-    account = userProfile.objects.get(user = request.user)
-    teams = account.teams.all()
+    user = request.user
+    try:
+        account = userProfile.objects.get(user = user)
+        teams = account.teams.all()
+    except:
+        context_dict = {}
+        return render(request, 'scrim_finder/myMatches.html', context_dict)
 
     matches = Match.objects.filter(teams__in = teams)
 

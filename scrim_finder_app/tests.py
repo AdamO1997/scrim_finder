@@ -266,6 +266,8 @@ class ViewsUsingTemplateTests(TestCase):
     #    self.assertTemplateUsed(response, 'scrim_finder/editTeam.html')
 
     def test_edit_account_using_template(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         response = self.client.get(reverse('editAccount'))
         self.assertTemplateUsed(response, 'scrim_finder/editAccount.html')
 
@@ -305,7 +307,6 @@ class ViewsUsingTemplateTests(TestCase):
         test_utils.create_user()
         self.client.login(username='testuser', password='test1234')
         response = self.client.get(reverse('myTeams'))
-        print response
         self.assertTemplateUsed(response, 'scrim_finder/myTeams.html')
 
     # not working
@@ -332,7 +333,6 @@ class ViewsUsingTemplateTests(TestCase):
         self.client.login(username='testuser', password='test1234')
         matchID = "DTA198372"
         response = self.client.get(reverse('joinMatch', args=(matchID,)))
-        print response
         self.assertTemplateUsed(response, 'scrim_finder/joinMatch.html')
 
 
@@ -346,7 +346,7 @@ class TemplateExistsTests(TestCase):
         self.assertTrue(os.path.isfile(path_to_base))
 
     def test_createMatch_template_exists(self):
-        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/createMatcg.html'
+        path_to_base = settings.TEMPLATE_DIR + '/scrim_finder/createMatch.html'
         self.assertTrue(os.path.isfile(path_to_base))
 
     def test_createTeam_template_exists(self):

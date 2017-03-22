@@ -107,7 +107,7 @@ def edit_team(request, teamSlug):
 
         if inTeam:
             if request.method == 'POST':
-                form = TeamForm(request.POST, instance=instance)
+                form = TeamForm(request.POST, instance = instance)
 
                 if form.is_valid():
                     form.save(commit=True)

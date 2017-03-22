@@ -26,7 +26,11 @@ SECRET_KEY = '4v1%@^1$&#9c6a8#5_2+=6k!eah%2-9ey(t8igp+b_*ekt5sl_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['adamo1997.pythonanywhere.com']
+ALLOWED_HOSTS = [
+    'adamo1997.pythonanywhere.com',
+    'localhost'
+
+]
 
 env.project_root = '/home/AdamO1997/scrim_finder'
 

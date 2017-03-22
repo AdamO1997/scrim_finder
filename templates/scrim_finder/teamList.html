@@ -7,7 +7,7 @@
 	<h1>Team List</h1>
 	{% for team in teams %}
 	
-		<div align="center" class="col-sm-3 col-md-3">
+	<div align="center" class="col-sm-3 col-md-3">
 		<br>
 		<a href="{% url 'team' team.slug %}">
 		<img src="https://s-media-cache-ak0.pinimg.com/736x/bd/15/4f/bd154fdb54f0ff6fa025d86ee3a95841.jpg" width="200px"><br>
@@ -15,10 +15,6 @@
 		</a>
 		<br>
 	</div>
-	
-	
-	
-	
-		<a href=""></a>
+
 	{% endfor %}
 {% endblock %}

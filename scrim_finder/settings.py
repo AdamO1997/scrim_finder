@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from fabric.api import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,6 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['adamo1997.pythonanywhere.com']
 
+env.project_root = '/home/AdamO1997/scrim_finder'
+
+def deploy_static():
+    with cd(env.project_root):
+        run('./manage.py collectstatic -v0 --noinput')
 
 # Application definition
 

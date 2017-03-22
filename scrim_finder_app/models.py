@@ -12,7 +12,7 @@ class Team(models.Model):
     password = models.CharField(max_length = 15, default = "")
     passRequired = models.BooleanField(default = False)
     full = models.BooleanField(default = False)
-    image = models.ImageField(upload_to='team_images',blank = True)
+    image = models.ImageField(upload_to='team_images',default = 'team_images/default.jpg')
     users = models.ManyToManyField('userProfile')
     slug = models.SlugField(unique = True)
 

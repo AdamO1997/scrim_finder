@@ -5,7 +5,9 @@
 
 {% block body_block %}
 	<h1>Match ID: {{ match.matchID }} </h1>
-	<img src="{{ team.image }}" alt="Team Logo" height="500" width="500">
+	{% for  team in teams %}
+		<img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="500" width="500">
+	{% endfor %}
 	<h2>Date: {{ match.date }}</h2>
 	<h2>Teams Playing:</h2>
 	<ul>

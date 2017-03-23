@@ -78,8 +78,9 @@ def edit_match(request, matchID):
 
                 if form.is_valid():
                     form.save(commit=True)
-
-                    return match(request, matchID)
+                    data = form.cleaned_data
+                    matchID = data['matchID']
+                    return HttpResponseRedirect(reverse('match', kwargs={'matchID': matchID}))
                 else:
                     print(form.errors)
             else:
@@ -107,12 +108,15 @@ def edit_team(request, teamSlug):
 
         if inTeam:
             if request.method == 'POST':
-                form = TeamForm(request.POST, instance = instance)
+                form = TeamForm(request.POST, request.FILES, instance = instance)
 
                 if form.is_valid():
                     form.save(commit=True)
+                    data = form.cleaned_data
+                    title = data['title']
 
-                    return team(request, teamSlug)
+                    instance = Team.objects.get(title = title)
+                    return HttpResponseRedirect(reverse('team', kwargs={'teamSlug': instance.slug}))
                 else:
                     print(form.errors)
             else:
@@ -133,22 +137,19 @@ def edit_account(request):
 
 
         if request.method == 'POST':
-            userForm = UserForm(request.POST, instance=user)
-            userProfileForm = UserProfileForm(request.POST, instance = userProfileInstance)
+            userProfileForm = UserProfileForm(request.POST, request.FILES, instance = userProfileInstance)
 
-            if userForm.is_valid() and userProfileForm.is_valid():
-                userForm.save(commit=True)
+            if userProfileForm.is_valid():
+
                 userProfileForm.save(commit=True)
-
-                return account(request, request.user.username)
+                return HttpResponseRedirect(reverse('profile', kwargs={'username': request.user.username}))
             else:
-                print(userForm.errors)
+
                 print(userProfileForm.errors)
         else:
-            userForm = UserForm(instance=user)
             userProfileForm = UserProfileForm(instance=userProfileInstance)
 
-        return render(request, 'scrim_finder/editAccount.html', {'userForm': userForm, 'userProfileForm': userProfileForm})
+        return render(request, 'scrim_finder/editAccount.html', {'userProfileForm': userProfileForm})
 
     else:
         return HttpResponse('You must be logged in to view this page')

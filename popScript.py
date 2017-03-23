@@ -77,6 +77,7 @@ def add_game(title, genre, icon):
 
 def add_match(ID, date, game, teams):
     m = Match.objects.get_or_create(matchID = ID, game = game, date = date)[0]
+    m.teams.add(teams)
     m.date = date
     m.game = game
     m.save()

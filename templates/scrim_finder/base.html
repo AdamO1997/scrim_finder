@@ -24,7 +24,7 @@
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="{% url 'index' %}">Scrim Finder</a>
 			</div>
-			
+
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			  <ul class="nav navbar-nav">
 				<li><a href="{% url 'gameList' %}">Games</a></li>
@@ -34,11 +34,12 @@
 				<li><a href="{% url 'createTeam' %}">Create Team</a></li>
 				<li><a href="{% url 'myMatches' %}">My Matches</a></li>
 				<li><a href="{% url 'createMatch' %}">Create Match</a></li>
+				<li><a href="{% url 'profile' request.user.username %}">My Profile</a></li>
 				<li><a href="{% url 'editAccount' %}">Edit Account</a></li>
 				<li><a href="{% url 'logout' %}">Logout</a></li>
 			{% else %}
 				<li><a href="{% url 'login' %}">Sign In</a></li>
-				<li><a href="{% url 'register' %}">Sign Up</a></li>							
+				<li><a href="{% url 'register' %}">Sign Up</a></li>
 			{% endif %}
 			  </ul>
 			</div>

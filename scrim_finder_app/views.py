@@ -19,17 +19,18 @@ def create_team(request):
     form = TeamForm()
 
     if request.method == 'POST':
-        form = TeamForm(request.POST)
+        form = TeamForm(request.POST, request.FILES)
 
         if form.is_valid():
             profile = userProfile.objects.get(user = request.user)
             form.save(commit=True)
             data = form.cleaned_data
             title = data['title']
+            print data['image']
             team = Team.objects.get(title = title)
             team.users.add(profile)
             profile.teams.add(team)
-            return index(request)
+            return HttpResponseRedirect(reverse('index'))
         else:
             print(form.errors)
 
@@ -209,8 +210,8 @@ def register(request):
 
     if request.method == 'POST':
 
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST, request.FILES)
 
 
         if user_form.is_valid() and profile_form.is_valid():

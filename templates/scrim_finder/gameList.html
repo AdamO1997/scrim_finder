@@ -4,14 +4,13 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Game List</h1>
+	<h1 align="center">Game List</h1>
 	{% for currentGame in games %}
 
 	<div align="center" class="col-sm-3 col-md-3" height="200px" width = "200px">
 		<br>
 		<a href="{% url 'game' currentGame.slug %}">
-        <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" height="75px"><br>
-		<h2>{{ currentGame.game }}</h2>
+        <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" height="60px"><br>
 		</a>
 		<br>
 	</div>

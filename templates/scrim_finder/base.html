@@ -35,7 +35,7 @@
 				<li><a href="{% url 'myMatches' %}">My Matches</a></li>
 				<li><a href="{% url 'createMatch' %}">Create Match</a></li>
 				<li><a href="{% url 'profile' request.user.username %}">My Profile</a></li>
-				<li><a href="{% url 'editAccount' %}">Edit Account</a></li>
+				<li><a href="{% url 'editAccount' %}">Edit Profile</a></li>
 				<li><a href="{% url 'logout' %}">Logout</a></li>
 			{% else %}
 				<li><a href="{% url 'login' %}">Sign In</a></li>

@@ -87,13 +87,14 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 		</div>
 
 	  {% for currentMatch in matches %}
-
+        <a href="{% url 'game' currentGame.slug %}">
 		<div class="item">
 		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="" height="100px">
 		  <div class="carousel-caption">
 			{{ currentMatch.matchID }}
 		  </div>
 		</div>
+		  </a>
 
 	  {% endfor %}
 

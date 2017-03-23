@@ -174,14 +174,15 @@ class CreateTeamViewTests(TestCase):
             return False
         # Check display and format of form
         # Header
+        print response.context
         self.assertIn('<h1>Create a Team</h1>'.lower(), response.content.lower())
         # Check form in response context is an instance of UserForm
-        self.assertTrue(isinstance(response.context['TeamForm'], TeamForm))
+        self.assertTrue(isinstance(response.context['form'], TeamForm))
         team_form = TeamForm()
         # Check form is displayed correctly
-        self.assertEquals(response.context['TeamForm'].as_p(), team_form.as_p())
+        self.assertEquals(response.context['form'].as_p(), team_form.as_p())
         # Correct submit button
-        self.assertIn('input type="submit" value="Create Team"', response.content)
+        self.assertIn('input type="submit" name="submit" value="Create Team"', response.content)
 
 
 

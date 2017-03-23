@@ -29,29 +29,29 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 <div class="col-sm-6 col-md-6">
 <h2>Teams</h2>
 
-	
 
-	<div id="teams" class="carousel slide" data-ride="carousel">
+
+	<div id="teams" class="carousel slide" data-ride="carousel" height="100px">
 
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	  
+
 	  	<div class="item active">
-		  <img src="{{ MEDIA_URL }}slider_pages/teams.png" alt="">
+		  <img src="{{ STATIC_URL }}scrim_finder/slider_pages/teams.png" alt="" height="100px">
 		  <div class="carousel-caption">
-			MAIN TEAM
+			Featured Teams
 		  </div>
 		</div>
-	  
+
 	  {% for currentTeam in teams %}
-	  
-		<div class="item">
-		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+
+		<div class="item" height="100px">
+		  <img src="{{ MEDIA_URL }}{{ currentTeam.image }}" alt="" height="100px">
 		  <div class="carousel-caption">
 			{{ currentTeam.title }}
 		  </div>
 		</div>
-	  
+
 	  {% endfor %}
 
 	  </div>
@@ -66,8 +66,8 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 		<span class="sr-only">Next</span>
 	  </a>
 	</div>
-	
-	
+
+
 
 </div>
 
@@ -78,23 +78,23 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	  
+
 	  	<div class="item active">
-		  <img src="{{ MEDIA_URL }}slider_pages/matches.png" alt="">
+		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/matches.png" alt="" height="100px">
 		  <div class="carousel-caption">
-			MAIN MATCH
+			Today's Matches
 		  </div>
 		</div>
-	  
+
 	  {% for currentMatch in matches %}
-	  
+
 		<div class="item">
-		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="" height="100px">
 		  <div class="carousel-caption">
 			{{ currentMatch.matchID }}
 		  </div>
 		</div>
-	  
+
 	  {% endfor %}
 
 	  </div>
@@ -121,23 +121,23 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
-	  
+
 	  	<div class="item active">
-		  <img src="{{ MEDIA_URL }}slider_pages/games.png" alt="">
+		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/games.png" height="100px" alt="">
 		  <div class="carousel-caption">
-			MAIN GAME
+			Featured Games
 		  </div>
 		</div>
-	  
+
 	  {% for currentGame in games %}
-	  
+
 		<div class="item">
-		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="">
+		  <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" height="100px" alt="">
 		  <div class="carousel-caption">
 			{{ currentGame.game }}
 		  </div>
 		</div>
-	  
+
 	  {% endfor %}
 
 	  </div>

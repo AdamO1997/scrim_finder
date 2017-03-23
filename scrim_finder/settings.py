@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'adamo1997.pythonanywhere.com',
+    'woodward.pythonanywhere.com',
     'localhost'
 
 ]

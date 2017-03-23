@@ -9,7 +9,7 @@
 	<h2>Teams:</h2>
 	<ul>
 		{% for team in teams %}
-			<li><a href="{% url 'team' team.slug %}">{{ team.title }}</a></li>
+			<li><a href="{% url 'team' team.slug %}"><img src="{{ MEDIA_URL }}{{ team.image }}" alt="Profile Picture" height="50" width="50">{{ team.title }}</a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}

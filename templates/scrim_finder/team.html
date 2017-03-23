@@ -9,7 +9,7 @@
 	<h2>Players:</h2>
 	<ul>
 	{% for  player in players %}
-		<li><a href="{% url 'profile' player.user.username %}">{{ player.user.username }}</a></li>
+		<li><a href="{% url 'profile' player.user.username %}"><img src="{{ MEDIA_URL }}{{ player.picture }}" alt="Profile Pic" height="50" width="50">{{ player.user.username }}</a></li>
 	{% endfor %}
 	</ul>
 	{% if notInTeam and user.is_authenticated and not team.full %}

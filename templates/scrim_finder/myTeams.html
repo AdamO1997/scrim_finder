@@ -5,7 +5,15 @@
 
 {% block body_block %}
 	<h1>My Teams</h1>
+
 	{% for team in teams %}
-		<a href="{% url 'team' team.slug %}">{{ team.title }}</a>
+		<div align="center" class="col-sm-3 col-md-3" width="200px" height="200px">
+		<br>
+		<a href="{% url 'team' team.slug %}">
+		<img src="{{ MEDIA_URL }}{{ team.image }}" ><br>
+		<h2>{{ team.title }}</h2>
+		</a>
+		<br>
+	`</div>
 	{% endfor %}
 {% endblock %}

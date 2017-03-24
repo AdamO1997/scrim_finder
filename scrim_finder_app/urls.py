@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from scrim_finder_app import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
 	url(r'^$', views.index, name='index'),
@@ -38,5 +40,9 @@ urlpatterns = [
     url(r'^match/(?P<matchID>[\w\-]+)/join', views.joinMatch, name='joinMatch'),
     url(r'^team/(?P<teamSlug>[\w\-]+)/join', views.joinTeam, name='joinTeam')
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 
 

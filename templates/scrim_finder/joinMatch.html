@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to Rango</h1>
+<div align="center">
+<h1>This match requires a password to join:</h1>
 <form id="join_team_form" method="post" action="{% url 'joinMatch' match.matchID %}">
 	{% csrf_token %}
 	{% if locked %}
@@ -20,4 +21,5 @@
 	</select>
 	<input type="submit" value="submit" />
 </form>
+</div>
 {% endblock %}

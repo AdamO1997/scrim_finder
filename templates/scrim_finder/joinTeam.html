@@ -6,11 +6,13 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Login to Rango</h1>
+<div align="center">
+<h1>{{ team.title }} requires a password to join:</h1>
 <form id="join_team_form" method="post" action="{% url 'joinTeam' team.slug %}">
 	{% csrf_token %}
 	Password: <input type="text" name="password" value="" size="50" />
 	<br />
 	<input type="submit" value="submit" />
 </form>
+</div>
 {% endblock %}

@@ -7,7 +7,7 @@
 
 {% block body_block %}
 <div align="center">
-<h1>This match requires a password to join:</h1>
+<h1>Select your team:</h1>
 <form id="join_team_form" method="post" action="{% url 'joinMatch' match.matchID %}">
 	{% csrf_token %}
 	{% if locked %}

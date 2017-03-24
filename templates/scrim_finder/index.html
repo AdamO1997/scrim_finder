@@ -7,22 +7,22 @@
 {% block body_block %}
 <div class="col-sm-6 col-md-6">
 <h2>About</h2>
-<p>Scrim Finder is an application allowing competitive gamers a place to find
+<p align="justify">Scrim Finder is an application allowing competitive gamers a place to find
 and organise practice matches with other teams, and to spectate and learn from other
 matches.
-<p>Players are able to browse all the games, teams and current matches. Once a player
+<p align="justify">Players are able to browse all the games, teams and current matches. Once a player
 has signed up for Scrim Finder, they have the ability to either
 browse and join an existing team, or to create their own. Players are then able to
 create a match with another team at a particular time they are available, and then
 other teams are able to view these times and book a match with the team that posted
 it.
-<p>This application gives gamers an easy way to find and play with each other,
+<p align="justify">This application gives gamers an easy way to find and play with each other,
 making it much easier to get in practice or just for fun.
 
 </div>
 
 <div class="col-sm-6 col-md-6">
-<h2>Teams</h2>
+<h2>Featured Teams</h2>
 
 
 
@@ -31,8 +31,8 @@ making it much easier to get in practice or just for fun.
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 
-	  	<div class="item active">
-		  <img src="{{ STATIC_URL }}scrim_finder/slider_pages/teams.png">
+	  	<div class="item active" align="center" valign="center">
+		  <div style="height:300px;border:0px"><img src="{{ STATIC_URL }}scrim_finder/slider_pages/teams.png"  width="300px"></div>
 		  <div class="carousel-caption">
 			Featured Teams
 		  </div>
@@ -40,9 +40,9 @@ making it much easier to get in practice or just for fun.
 
 	  {% for currentTeam in teams %}
 
-		<div class="item" height="100px" >
+		<div class="item" align="center">
 		  <a href="{% url 'team' currentTeam.slug %}">
-		  <img src="{{ MEDIA_URL }}{{ currentTeam.image }}" height="100px">
+		  <div style="height:300px;border:0px;"><img src="{{ MEDIA_URL }}{{ currentTeam.image }}" alt="{{ currentTeam.title }}" width="300px"></div>
 		  </a>
 		  <div class="carousel-caption">
 			{{ currentTeam.title }}
@@ -76,19 +76,21 @@ making it much easier to get in practice or just for fun.
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 
-	  	<div class="item active">
-		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/matches.png" alt="" height="100px">
+	  	<div class="item active" align="center">
+		  <div style="height:200px;border:0px"><img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/matches.png" alt="" width="300px"></div>
 		  <div class="carousel-caption">
 			Today's Matches
 		  </div>
 		</div>
 
 	  {% for currentMatch in matches %}
-		<div class="item">
+		<div class="item" align="center">
 		  <a href="{% url 'match' currentMatch.matchID %}">
+		  <div style="height:200px;border:0px">
 		  {% for team in currentMatch.teams.all %}
-		  <img src="{{ MEDIA_URL }}{{ team.image }}" alt="" width="200px" height="200px">
+		  <img src="{{ MEDIA_URL }}{{ team.image }}" alt="{{ currentMatch.matchID }}" width="150px">
 		  {% endfor %}
+		  </div>
 		  </a>
 		  <div class="carousel-caption">
 			{{ currentMatch.matchID }}
@@ -114,7 +116,7 @@ making it much easier to get in practice or just for fun.
 </div>
 
 <div class="col-sm-6 col-md-6">
-<h2>Games</h2>
+<h2>Featured Games</h2>
 
 
 	<div id="games" class="carousel slide" data-ride="carousel">
@@ -122,8 +124,8 @@ making it much easier to get in practice or just for fun.
 	  <!-- Wrapper for slides -->
 	  <div class="carousel-inner" role="listbox">
 
-	  	<div class="item active">
-		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/games.png" alt="">
+	  	<div class="item active" align="center">
+		  <div style="height:200px;border:0px"><img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/games.png" alt=""  width="300px"></div>
 		  <div class="carousel-caption">
 			Featured Games
 		  </div>
@@ -131,9 +133,9 @@ making it much easier to get in practice or just for fun.
 
 	  {% for currentGame in games %}
 
-		<div class="item">
+		<div class="item" align="center">
 		  <a href="{% url 'game' currentGame.slug %}">
-		  <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" alt="">
+		  <div style="height:200px;border:0px"><img src="{{ MEDIA_URL }}{{ currentGame.icon }}" alt="{{ currentGame.title }}"  width="400px"></div>
 		  </a>
 		</div>
 
@@ -155,6 +157,5 @@ making it much easier to get in practice or just for fun.
 
 
 </div>
-
 
 {% endblock %}

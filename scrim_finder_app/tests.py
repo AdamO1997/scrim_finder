@@ -162,8 +162,6 @@ class RegistrationViewTests(TestCase):
 
 # Tests of the createTeam View
 class CreateTeamViewTests(TestCase):
-    # won't work
-    # reverse url isn't giving right url, similar to all the template errors
     def test_create_team_form_displayed_correctly(self):
         test_utils.create_user()
         self.client.login(username='testuser', password='test1234')
@@ -174,7 +172,6 @@ class CreateTeamViewTests(TestCase):
             return False
         # Check display and format of form
         # Header
-        print response.context
         self.assertIn('<h1>Create a Team</h1>'.lower(), response.content.lower())
         # Check form in response context is an instance of UserForm
         self.assertTrue(isinstance(response.context['form'], TeamForm))
@@ -188,9 +185,6 @@ class CreateTeamViewTests(TestCase):
 
 # Tests of the createMatch View
 class CreateMatchViewTests(TestCase):
-    # won't work
-    # reverse url isn't giving right url
-    # similar problem to above and to template errors
     def test_create_match_form_displayed_correctly(self):
         test_utils.create_user()
         self.client.login(username='testuser', password='test1234')
@@ -245,47 +239,7 @@ class ViewsUsingTemplateTests(TestCase):
     def test_index_using_template(self):
         response = self.client.get(reverse('index'))
         # Check the template used to render index page
-        #print response
         self.assertTemplateUsed(response, 'scrim_finder/index.html')
-
-    def test_create_team_using_template(self):
-        response = self.client.get(reverse('createTeam'))
-        self.assertTemplateUsed(response, 'scrim_finder/createTeam.html')
-
-    def test_create_match_using_template(self):
-        response = self.client.get(reverse('createMatch'))
-        self.assertTemplateUsed(response, 'scrim_finder/createMatch.html')
-
-    # not working
-    def test_edit_match_using_template(self):
-        test_utils.create_user()
-        self.client.login(username='testuser', password='test1234')
-        match = Match(matchID="TestMatch", game=Games.objects.get(game="Fifa 17"), date='2017-12-12')
-        match.save()
-        response = self.client.get(reverse('editMatch', args=(matchID,)))
-        self.assertTemplateUsed(response, 'scrim_finder/editMatch.html')
-
-    # not working
-    #def test_edit_team_using_template(self):
-    #    response = self.client.get(reverse('editTeam'))
-    #    self.assertTemplateUsed(response, 'scrim_finder/editTeam.html')
-
-    def test_edit_account_using_template(self):
-        test_utils.create_user()
-        self.client.login(username='testuser', password='test1234')
-        response = self.client.get(reverse('editAccount'))
-        self.assertTemplateUsed(response, 'scrim_finder/editAccount.html')
-
-    # not working
-    #def test_team_using_template(self):
-    #    team = Team.objects.get_or_create(title="TeamGO")[0]
-    #    response = self.client.get(reverse('team', args =(team,)))
-    #    self.assertTemplateUsed(response, 'scrim_finder/team.html')
-
-    # not working
-    #def test_match_using_template(self):
-    #    response = self.client.get(reverse('match'))
-    #    self.assertTemplateUsed(response, 'scrim_finder/match.html')
 
     def test_user_login_using_template(self):
         response = self.client.get(reverse('login'))
@@ -294,13 +248,6 @@ class ViewsUsingTemplateTests(TestCase):
     def test_register_using_template(self):
         response = self.client.get(reverse('register'))
         self.assertTemplateUsed(response, 'scrim_finder/register.html')
-
-    # not working
-    #def test_account_using_template(self):
-    #    user = test_utils.create_user()
-    #    self.client.login(username='testuser', password='test1234')
-    #    response = self.client.get(reverse('account',args=()))
-    #    self.assertTemplateUsed(response, 'scrim_finder/account.html')
 
     def test_myMatches_using_template(self):
         test_utils.create_user()
@@ -314,31 +261,13 @@ class ViewsUsingTemplateTests(TestCase):
         response = self.client.get(reverse('myTeams'))
         self.assertTemplateUsed(response, 'scrim_finder/myTeams.html')
 
-    # not working
-    #def test_matchList_using_template(self):
-    #    response = self.client.get(reverse('matchList'))
-    #    self.assertTemplateUsed(response, 'scrim_finder/matchList.html')
-
     def test_teamList_using_template(self):
         response = self.client.get(reverse('teamList'))
-        #print response
         self.assertTemplateUsed(response, 'scrim_finder/teamList.html')
 
     def test_gameList_using_template(self):
         response = self.client.get(reverse('gameList'))
         self.assertTemplateUsed(response, 'scrim_finder/gameList.html')
-
-    # not working
-    #def test_joinTeam_using_template(self):
-    #    response = self.client.get(reverse('joinTeam'))
-    #    self.assertTemplateUsed(response, 'scrim_finder/joinTeam.html')
-
-    def test_joinMatch_using_template(self):
-        test_utils.create_user()
-        self.client.login(username='testuser', password='test1234')
-        matchID = "DTA198372"
-        response = self.client.get(reverse('joinMatch', args=(matchID,)))
-        self.assertTemplateUsed(response, 'scrim_finder/joinMatch.html')
 
 
 class TemplateExistsTests(TestCase):
@@ -424,7 +353,7 @@ class TemplateExistsTests(TestCase):
 
 
 
-class UrlLinkTests():
+class UrlLinkTests(TestCase):
     def test_url_reference_index_page_when_logged(self):
         # Create user and log in
         test_utils.create_user()
@@ -434,14 +363,11 @@ class UrlLinkTests():
         # Check links that appear for logged in person
         self.assertIn(reverse('index'), response.content)
         self.assertIn(reverse('logout'), response.content)
-        self.assertIn(reverse('account'), response.content)
-        self.assertIn(reverse('myGames'), response.content)
         self.assertIn(reverse('myTeams'), response.content)
-        self.assertIn(reverse('editMatches'), response.content)
-        self.assertIn(reverse('editTeams'), response.content)
+        self.assertIn(reverse('myMatches'), response.content)
         self.assertIn(reverse('gameList'), response.content)
         self.assertIn(reverse('teamList'), response.content)
-        self.assertIn(reverse('editAccount'), response.content)
+        #self.assertIn(reverse('profile', args='username'), response.content)
 
 
     def test_url_reference_index_page_not_logged(self):

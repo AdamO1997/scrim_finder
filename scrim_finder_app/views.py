@@ -172,12 +172,12 @@ def match(request, matchID):
     match = Match.objects.get(matchID = matchID)
     teams = match.teams.all()
     notInMatch = True
-    if request.user.is_authenticated() and match.full:
+    if request.user.is_authenticated():
         profile = userProfile.objects.get(user=request.user)
         userTeams = profile.teams.all()
         for team in teams:
             for userTeam in userTeams:
-                if  team == userTeam:
+                if  team.slug == userTeam.slug:
                     notInMatch = False
                     break;
 

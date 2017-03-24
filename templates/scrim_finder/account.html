@@ -4,12 +4,17 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Username: {{ username }}</h1>
+    <a href="{% url 'editAccount' %}"><h3>Edit My Profile</h3></a>
 	<img src="{{ MEDIA_URL }}{{ profile.picture }}" alt="Profile Picture" height="500" width="500">
 	<h2>Teams:</h2>
 	<ul>
 		{% for team in teams %}
-			<li><a href="{% url 'team' team.slug %}"><img src="{{ MEDIA_URL }}{{ team.image }}" alt="Profile Picture" height="50" width="50">{{ team.title }}</a></li>
+		    <li><h3><a href="{% url 'team' team.slug %}"><img src="{{ MEDIA_URL }}{{ team.image }}" alt="Profile Picture" height="75">&nbsp&nbsp&nbsp{{ team.title }}</h3></a></li>
 		{% endfor %}
 	</ul>
+	<br>
+	<a href="{% url 'teamList' %}"><h3>Click here to browse teams</h3></a>
+</div>
 {% endblock %}

@@ -4,18 +4,21 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Team Name: {{ team.title }} </h1>
-	<img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="500" width="500">
+	<img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="500">
 	<h2>Players:</h2>
 	<ul>
 	{% for  player in players %}
-		<li><a href="{% url 'profile' player.user.username %}"><img src="{{ MEDIA_URL }}{{ player.picture }}" alt="Profile Pic" height="50" width="50">{{ player.user.username }}</a></li>
+		<li><h3><a href="{% url 'profile' player.user.username %}"><img src="{{ MEDIA_URL }}{{ player.picture }}" alt="Profile Pic" height="75">&nbsp&nbsp&nbsp{{ player.user.username }}</h3></a></li>
 	{% endfor %}
 	</ul>
+	<br>
 	{% if notInTeam and user.is_authenticated and not team.full %}
-		<a href="{% url 'joinTeam' team.slug %}">Join Team</a>
+		<a href="{% url 'joinTeam' team.slug %}"><h3>Click here to join {{ team.title }}.</h3></a>
 	{% endif %}
 	{% if not notInTeam %}
-		<a href="{% url 'editTeam' team.slug %}">Edit Team</a>
+		<a href="{% url 'editTeam' team.slug %}"><h3>Click here to edit {{ team.title }}'s details.</h3></a>
 	{% endif %}
+</div>
 {% endblock %}

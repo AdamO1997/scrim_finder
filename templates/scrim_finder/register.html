@@ -6,11 +6,13 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
+<h1>Register for Scrim Finder</h1>
 	{% if registered %}
-		<strong>Thank you for registering!</strong>
-		<a href="{% url 'index' %}">Return to the homepage.</a><br />
+		<strong>Thank you for registering!</strong><br>
+		<a href="{% url 'index' %}">Return to the homepage</a><br>or<br>
+		<a href="{% url 'login' %}">click here to login.</a><br />
 	{% else %}
-		Rango says: <strong>register here!</strong><br />
 		<form id="user_form" method="post" action="{% url 'register' %}"
 			enctype="multipart/form-data">
 
@@ -24,4 +26,5 @@
 		<input type="submit" name="submit" value="Register" />
 	</form>
 	{% endif %}
+</div>
 {% endblock %}

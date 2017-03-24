@@ -4,8 +4,11 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>{{ game.game }}</h1>
 	<h2>Genre: {{ game.genre }}</h2>
+	<a href="{% url 'matchList' game.slug %}">
 	<img src="{{ MEDIA_URL }}{{ game.icon }}" alt="Team Logo" height="200px" ><br>
-	<a href="{% url 'matchList' game.slug %}"> Match List </a>
+	<h3>Click here to view all current {{ game.game }} matches.</h3></a>
+</div>
 {% endblock %}

@@ -6,18 +6,20 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Create a Team</h1>
-	
+
 		<form id="TeamForm" method="post" action="{% url 'createTeam' %}"
 			enctype="multipart/form-data">
 
 		{% csrf_token %}
 
-		
+
 		{{ form.as_p }}
-		
-		
-		
+
+
+
 		<input type="submit" name="submit" value="Create Team" />
 	</form>
+</div>
 {% endblock %}

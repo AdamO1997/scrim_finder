@@ -2,15 +2,12 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Edit Account
+	Edit Profile
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Edit Account</h1>
-
-
-
-
 	<form id="userProfileForm" method="post" action="{% url 'editAccount' %}"
 		enctype="multipart/form-data">
 
@@ -20,5 +17,6 @@
 
 	<input type="submit" name="submit" value="Save Changes" />
 	</form>
+</div>
 
 {% endblock %}

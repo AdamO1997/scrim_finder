@@ -1,0 +1,14 @@
+body {
+    background-color: #e6f5ff;
+}
+.navbar {
+    background-color: #99d6ff;
+}
+
+ul {
+    list-style-type: none;
+}
+
+div #item {
+    height:100;
+}

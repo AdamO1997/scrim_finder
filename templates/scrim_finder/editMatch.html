@@ -6,17 +6,19 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Edit Match</h1>
-	
+
 		<form id="MatchForm" method="post" action="{% url 'editMatch' match %}"
 			enctype="multipart/form-data">
 
 		{% csrf_token %}
 
-		
+
 		{{ form.as_p }}
-		
-		
+
+
 		<input type="submit" name="submit" value="Save Changes" />
 	</form>
+</div>
 {% endblock %}

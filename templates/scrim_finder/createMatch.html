@@ -6,22 +6,24 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Create a Match</h1>
-	
+
 		<form id="MatchForm" method="post" action="{% url 'createMatch' %}"
 			enctype="multipart/form-data">
 
 		{% csrf_token %}
 
-		
+
 		{{ form.as_p }}
 		Team: <select name="joiningTeam">
 		{% for team in teams %}
 		 <option value={{ team.slug }} >{{ team.title }}</option>
 		{% endfor %}
 		</select>
-		
-		
+
+
 		<input type="submit" name="submit" value="Create Match" />
 	</form>
+</div>
 {% endblock %}

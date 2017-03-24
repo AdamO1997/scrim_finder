@@ -4,10 +4,10 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>My Teams</h1>
+	<h1 align="center">My Teams</h1>
 
 	{% for team in teams %}
-		<div align="center" class="col-sm-3 col-md-3" width="200px" height ="200px">
+	<div align="center" class="col-sm-3 col-md-3" width="200px" height ="200px">
 		<br>
 		<a href="{% url 'team' team.slug %}">
 		<img src="{{ MEDIA_URL }}{{ team.image }}" height="150px"><br>
@@ -16,4 +16,12 @@
 		<br>
 	</div>
 	{% endfor %}
+	<div align="center" class="col-sm-3 col-md-3" width="200px" height ="200px">
+		<br>
+		<a href="{% url 'createTeam' %}">
+		<div style="width:150px;height:150px;border:5px solid #000;"></div>
+		<h2>Create New Team</h2>
+		</a>
+		<br>
+	</div>
 {% endblock %}

@@ -8,6 +8,7 @@
 		<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
 		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="{{STATIC_DIR}}/static/scrim_finder/style.css"/>
 
 
 		<title>
@@ -19,23 +20,20 @@
 	</head>
 	<body>
 		<nav class="navbar navbar-default">
+		  <b>
 		  <div class="container-fluid">
-
 			<div class="navbar-header">
 			  <a class="navbar-brand" href="{% url 'index' %}">Scrim Finder</a>
 			</div>
-
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			  <ul class="nav navbar-nav">
 				<li><a href="{% url 'gameList' %}">Games</a></li>
-				<li><a href="{% url 'teamList' %}">Team List</a></li>
+				<li><a href="{% url 'teamList' %}">Teams</a></li>
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'myTeams' %}">My Teams</a></li>
-				<li><a href="{% url 'createTeam' %}">Create Team</a></li>
 				<li><a href="{% url 'myMatches' %}">My Matches</a></li>
 				<li><a href="{% url 'createMatch' %}">Create Match</a></li>
 				<li><a href="{% url 'profile' request.user.username %}">My Profile</a></li>
-				<li><a href="{% url 'editAccount' %}">Edit Profile</a></li>
 				<li><a href="{% url 'logout' %}">Logout</a></li>
 			{% else %}
 				<li><a href="{% url 'login' %}">Sign In</a></li>
@@ -44,6 +42,7 @@
 			  </ul>
 			</div>
 		  </div>
+		  </b>
 		</nav>
 
 

@@ -4,7 +4,11 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1 align="center">Game List</h1>
+    <div align="center">
+	<h1>Game List</h1>
+	<h3>Please <a href="mailto:2194801w@student.gla.ac.uk">contact an admin</a> to request a game to be added to Scrim Finder.</h3>
+	<h6>(The above link may fail to work depending on your browser's mail settings. In this case please email 2194801w@student.gla.ac.uk)</h6>
+	</div>
 	{% for currentGame in games %}
 
 	<div align="center" class="col-sm-3 col-md-3" height="200px" width = "200px">

@@ -87,14 +87,12 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 		</div>
 
 	  {% for currentMatch in matches %}
-        <a href="{% url 'game' currentGame.slug %}">
 		<div class="item">
 		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="" height="100px">
 		  <div class="carousel-caption">
 			{{ currentMatch.matchID }}
 		  </div>
 		</div>
-		  </a>
 
 	  {% endfor %}
 
@@ -124,7 +122,7 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 	  <div class="carousel-inner" role="listbox">
 
 	  	<div class="item active">
-		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/games.png" height="100px" alt="">
+		  <img src="{{ STATIC_DIR }}/static/scrim_finder/slider_pages/games.png" alt="">
 		  <div class="carousel-caption">
 			Featured Games
 		  </div>
@@ -133,7 +131,7 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 	  {% for currentGame in games %}
 
 		<div class="item">
-		  <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" height="100px" alt="">
+		  <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" alt="">
 		  <div class="carousel-caption">
 			{{ currentGame.game }}
 		  </div>

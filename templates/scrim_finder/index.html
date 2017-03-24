@@ -45,8 +45,10 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 
 	  {% for currentTeam in teams %}
 
-		<div class="item" height="100px">
+		<div class="item" height="100px" >
+		  <a href="{% url 'team' currentTeam.slug %}">
 		  <img src="{{ MEDIA_URL }}{{ currentTeam.image }}" height="100px">
+		  </a>
 		  <div class="carousel-caption">
 			{{ currentTeam.title }}
 		  </div>
@@ -88,7 +90,11 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 
 	  {% for currentMatch in matches %}
 		<div class="item">
-		  <img src="https://i.ytimg.com/vi/Jkom5Ajo0iQ/hqdefault.jpg" alt="" height="100px">
+		  <a href="{% url 'match' currentMatch.matchID %}">
+		  {% for team in currentMatch.teams.all %}
+		  <img src="{{ MEDIA_URL }}{{ team.image }}" alt="" width="200px" height="200px">
+		  {% endfor %}
+		  </a>
 		  <div class="carousel-caption">
 			{{ currentMatch.matchID }}
 		  </div>
@@ -131,10 +137,9 @@ Ball tip corned beef pig sausage frankfurter short loin shankle pork loin bresao
 	  {% for currentGame in games %}
 
 		<div class="item">
+		  <a href="{% url 'game' currentGame.slug %}">
 		  <img src="{{ MEDIA_URL }}{{ currentGame.icon }}" alt="">
-		  <div class="carousel-caption">
-			{{ currentGame.game }}
-		  </div>
+		  </a>
 		</div>
 
 	  {% endfor %}

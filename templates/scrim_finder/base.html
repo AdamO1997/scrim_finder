@@ -32,7 +32,6 @@
 			{% if user.is_authenticated %}
 				<li><a href="{% url 'myTeams' %}">My Teams</a></li>
 				<li><a href="{% url 'myMatches' %}">My Matches</a></li>
-				<li><a href="{% url 'createMatch' %}">Create Match</a></li>
 				<li><a href="{% url 'profile' request.user.username %}">My Profile</a></li>
 				<li><a href="{% url 'logout' %}">Logout</a></li>
 			{% else %}

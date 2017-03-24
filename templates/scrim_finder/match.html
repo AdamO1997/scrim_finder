@@ -4,15 +4,17 @@
 {% endblock %}
 
 {% block body_block %}
+<div align="center">
 	<h1>Match ID: {{ match.matchID }} </h1>
 	{% for  team in teams %}
-		<img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="500" width="500">
+		<img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" width="500">
 	{% endfor %}
+	<p><font size="100pt"><i><u>VS</u></i></font></p>
 	<h2>Date: {{ match.date }}</h2>
 	<h2>Teams Playing:</h2>
 	<ul>
 	{% for  team in teams %}
-		<li><a href="{% url 'team' team.slug %}"><img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="50" width="50">{{ team.title }}</a></li>
+	    <li><h3><a href="{% url 'team' team.slug %}"><img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="75">&nbsp&nbsp&nbsp{{ team.title }}</h3></a></li>
 	{% endfor %}
 	</ul>
 	{% if notInMatch and user.is_authenticated and not match.full %}
@@ -21,4 +23,5 @@
 	{% if not notInMatch %}
 		<a href="{% url 'editMatch' match.matchID %}">Edit Match</a>
 	{% endif %}
+</div>
 {% endblock %}

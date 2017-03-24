@@ -8,7 +8,16 @@
 	<h1>My Matches</h1>
 	<h3>Below is a list of the matches in which a team you are a member of is competing:</h3>
 	{% for match in matches %}
-	<li><h2><a href="{% url 'match' match.matchID %}">{{ match.matchID }}</h2></a></li>
+	<a href="{% url 'match' match.matchID %}">
+    <div>
+
+	{% for team in match.teams.all %}
+	    <img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="100px">
+	{% endfor %}
+	<h2>VS.</h2>
+	<h2>{{ match.matchID }}</h2>
+	</div>
+	</a>
 	{% endfor %}
 	<li><h2><a href="{% url 'createMatch' %}"><b>Create New Match</b></h2></a></li>
 	<br>

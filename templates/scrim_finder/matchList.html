@@ -4,8 +4,24 @@
 {% endblock %}
 
 {% block body_block %}
+	<div align="center">
 	<h1>Match List</h1>
+	<h3>Below is a list of the matches for {{ gameName }}:</h3><br>
 	{% for match in matches %}
-		<a href="{% url 'match' match.matchID %}">{{ match.matchID }}</a>
+	<a href="{% url 'match' match.matchID %}">
+    <div align="center" class="col-sm-3 col-md-3" width="200px" height ="200px">
+
+	{% for team in match.teams.all %}
+	    <img src="{{ MEDIA_URL }}{{ team.image }}" alt="Team Logo" height="100px">
 	{% endfor %}
+	<h2>VS.</h2>
+	<h2>{{ match.matchID }}</h2>
+	<br>
+	</div>
+	</a>
+
+	{% endfor %}
+
+
+</div>
 {% endblock %}

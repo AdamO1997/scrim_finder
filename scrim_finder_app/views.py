@@ -250,11 +250,12 @@ def register(request):
 
 def index(request):
 
-    today = datetime.today()
+
+
 
 
     team_list = Team.objects.order_by('?')[:10]
-    match_list = Match.objects.filter(date=today).order_by('?')[:10]
+    match_list = Match.objects.order_by('?')[:10]
     game_list = Games.objects.order_by('?')
     context_dict = {'teams': team_list, 'matches': match_list, 'games': game_list}
 
@@ -314,7 +315,8 @@ def myTeams(request):
 def matchList(request, gameSlug):
     game = Games.objects.get(slug = gameSlug)
     matches = Match.objects.filter(game = game).order_by('date')
-    context_dict = {'matches': matches}
+    gameName = game.game
+    context_dict = {'matches': matches, 'gameName': gameName}
 
     return render(request, 'scrim_finder/matchList.html', context_dict)
 

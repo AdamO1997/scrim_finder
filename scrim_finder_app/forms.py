@@ -24,10 +24,11 @@ class TeamForm(forms.ModelForm):
         exclude = ('full', 'users', 'slug')
 
 class MatchForm(forms.ModelForm):
+    date = forms.DateTimeField(help_text="Format: yyyy-mm-dd hh:mm")
 
     class Meta:
         model = Match
         exclude = ('full', 'teams')
 
 
-    
+

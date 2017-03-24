@@ -66,7 +66,7 @@ class MatchMethodTests(TestCase):
     def test_create_new_match(self):
         ## Fixed
         # create sample match
-        fifa_game = Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
+        Games.objects.get_or_create(game = "Fifa 17", genre="Sports")[0]
         match = Match(matchID="TestMatch", game = Games.objects.get(game = "Fifa 17"), date='2017-12-12')
         match.save()
         # Check match is in database
@@ -145,7 +145,7 @@ class RegistrationViewTests(TestCase):
             return False
         # Check display and format of form
         # Header
-        self.assertIn('<h1>Register with Scrim Finder</h1>'.lower(), response.content.lower())
+        self.assertIn('<strong>Register Here!</strong>'.lower(), response.content.lower())
         # Check form in response context is an instance of UserForm
         self.assertTrue(isinstance(response.context['user_form'], UserForm))
         # Check form in response context is an instance of UserProfileForm
@@ -165,6 +165,8 @@ class CreateTeamViewTests(TestCase):
     # won't work
     # reverse url isn't giving right url, similar to all the template errors
     def test_create_team_form_displayed_correctly(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         # Access the create team page
         try:
             response = self.client.get(reverse('createTeam'))
@@ -172,14 +174,15 @@ class CreateTeamViewTests(TestCase):
             return False
         # Check display and format of form
         # Header
+        print response.context
         self.assertIn('<h1>Create a Team</h1>'.lower(), response.content.lower())
         # Check form in response context is an instance of UserForm
-        self.assertTrue(isinstance(response.context['TeamForm'], TeamForm))
+        self.assertTrue(isinstance(response.context['form'], TeamForm))
         team_form = TeamForm()
         # Check form is displayed correctly
-        self.assertEquals(response.context['TeamForm'].as_p(), team_form.as_p())
+        self.assertEquals(response.context['form'].as_p(), team_form.as_p())
         # Correct submit button
-        self.assertIn('input type="submit" value="Create Team"', response.content)
+        self.assertIn('input type="submit" name="submit" value="Create Team"', response.content)
 
 
 
@@ -189,6 +192,8 @@ class CreateMatchViewTests(TestCase):
     # reverse url isn't giving right url
     # similar problem to above and to template errors
     def test_create_match_form_displayed_correctly(self):
+        test_utils.create_user()
+        self.client.login(username='testuser', password='test1234')
         # Access the create match page
         try:
             response = self.client.get(reverse('createMatch'))

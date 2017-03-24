@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-from fabric.api import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,9 +34,7 @@ ALLOWED_HOSTS = [
 
 
 
-def deploy_static():
-    with cd(BASE_DIR):
-        run('./manage.py collectstatic -v0 --noinput')
+
 
 # Application definition
 
